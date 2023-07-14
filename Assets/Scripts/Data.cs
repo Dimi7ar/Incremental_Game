@@ -4,9 +4,13 @@ using UnityEngine;
 
 public class Data 
 {
-    public double wood;
+    public double exp;
+    public double level;
+    public double expPerSecond;
     public Data()
     {
-        wood = 0;
+        exp = 0;
+        level = 0;
+        expPerSecond = 1;
     }
 }
