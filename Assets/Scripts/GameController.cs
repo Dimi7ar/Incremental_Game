@@ -8,6 +8,7 @@ public class GameController : MonoBehaviour
 {
     public Data data = new Data();
     public Levels levels;
+    public Multiplier multiplier;
     
     private float period = 0.0f;
 
@@ -18,13 +19,13 @@ public class GameController : MonoBehaviour
 
     public void Update()
     {
-        if (period > 1)
+        if (period > 0)
         {
             ExpPerSecond();
             period = 0;
         }
-        LevelUpAction();
-        period += UnityEngine.Time.deltaTime;
+        GameLoop();
+        period += Time.deltaTime;
     }
 
     private void LevelUpAction()
@@ -42,9 +43,18 @@ public class GameController : MonoBehaviour
             levels.levelText.SetText($"Level: <color=green>{data.level}</color>");
         }
     }
-
     private void ExpPerSecond()
     {
         data.exp += data.expPerSecond;
+    }
+    public void BuyMultiplier()
+    {
+        multiplier.BuyMultiplier();
+        data.expPerSecond = multiplier.exp;
+        data.multiplier = multiplier.multiplier;
+    }
+    private void GameLoop()
+    {
+        LevelUpAction();
     }
 }

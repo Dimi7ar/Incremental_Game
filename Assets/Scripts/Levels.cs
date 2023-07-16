@@ -28,6 +28,6 @@ public class Levels : MonoBehaviour
     {
         level++;
         exp = 0;
-        levelRequierment += levelRequierment * 0.10;
+        levelRequierment += levelRequierment * 0.2;
     }
 }
