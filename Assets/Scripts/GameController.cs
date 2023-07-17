@@ -30,7 +30,7 @@ public class GameController : MonoBehaviour
 
     private void LevelUpAction()
     {
-        levels.text.SetText($"{data.exp:F0}/{levels.levelRequierment:F0}");
+        levels.text.SetText($"{ConvertNumber(data.exp)}/{ConvertNumber(levels.levelRequierment)}");
         levels.exp = data.exp;
         levels.level = data.level;
         levels.fillNumber = (float)(data.exp / levels.levelRequierment);
@@ -40,7 +40,7 @@ public class GameController : MonoBehaviour
             levels.LevelUp();
             data.exp = 0;
             data.level = levels.level;
-            levels.levelText.SetText($"Level: <color=green>{data.level}</color>");
+            levels.levelText.SetText($"Level: <color=green>{ConvertNumber(data.level)}</color>");
         }
     }
     private void ExpPerSecond()
@@ -56,5 +56,15 @@ public class GameController : MonoBehaviour
     private void GameLoop()
     {
         LevelUpAction();
+    }
+
+    public string ConvertNumber(double number)
+    {
+        if (number >= 1000)
+        {
+            return string.Format("{0:#.##E+0}", number);
+        }
+
+        return $"{number:F0}";
     }
 }
