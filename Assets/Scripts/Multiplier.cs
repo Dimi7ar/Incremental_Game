@@ -77,13 +77,19 @@ public class Multiplier : MonoBehaviour
         GameController.data.level = 0;
         GameController.data.exp = 0;
         GameController.levels.levelRequierment = 2;
+        
         expMultiplier = 1;
         multiplier += multiplierGain;
+        
         expMultiplier = math.pow(multiplier, multiplier / (multiplier * 2));
-        multiplierGain = 1;
-        maxLevel = 0;
         GameController.data.multiplier = multiplier;
         GameController.data.expMultiplier = expMultiplier;
+        
+        multiplierSoftcap = 1.25;
+        maxLength = 0;
+        maxLevel = 0;
+        multiplierGain = 1;
+        
         multiplierDescription.SetText($"Your {GameController.ConvertNumber(multiplier, 0)} multiplier points increase exp gain by x{GameController.ConvertNumber(expMultiplier, 2)}");
     }
 }

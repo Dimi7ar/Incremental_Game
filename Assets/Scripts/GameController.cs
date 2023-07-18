@@ -58,7 +58,7 @@ public class GameController : MonoBehaviour
     public void BuyMultiplier()
     {
         multiplier.BuyMultiplier();
-        data.expPerTick *= multiplier.expMultiplier;
+        data.expPerTick = multiplier.expMultiplier;
         data.multiplier = multiplier.multiplier;
     }
     private void GameLoop()
