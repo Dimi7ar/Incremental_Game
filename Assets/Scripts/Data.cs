@@ -4,15 +4,14 @@ using UnityEngine;
 
 public class Data 
 {
-    public double exp;
-    public double level;
-    public double expPerSecond;
-    public double multiplier;
+    public double exp = 0;
+    public double level = 0;
+    public double expPerTick = 1;
+    public double multiplier = 0;
+    public double expMultiplier = 1;
+    public double multiplierGain = 0;
     public Data()
     {
-        exp = 0;
-        level = 0;
-        expPerSecond = 1;
-        multiplier = 0;
+        
     }
 }

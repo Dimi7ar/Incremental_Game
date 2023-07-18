@@ -3,7 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class Multiplier : MonoBehaviour
@@ -12,10 +14,14 @@ public class Multiplier : MonoBehaviour
     public double multiplier;
     public double multiplierGain = 1;
     public double maxLevel;
-    public double exp;
+    public double expMultiplier;
     public Button button;
     public TMP_Text multiplierDescription;
     public TMP_Text multiplierButtonText;
+
+    private double multiplierSoftcap = 1.25;
+    private int maxLength = 0;
+    private double softcap = 1;
 
     public Multiplier()
     {
@@ -28,17 +34,34 @@ public class Multiplier : MonoBehaviour
             button.interactable = true;
             if (GameController.data.level > maxLevel)
             {
-                if (maxLevel > 25)
+                int length = ((int)multiplier).ToString().Length;
+                if (GameController.data.level > 25)
                 {
-                    multiplierGain *= 1.01;
+                    if (maxLength < length)
+                    {
+                        multiplierSoftcap = 1 + (softcap / 10);
+                        maxLength = length;
+                    }
+                    multiplierGain *= multiplierSoftcap;
+                }
+                else if (GameController.data.level > 100)
+                {
+                    if (maxLength < length)
+                    {   
+                        multiplierSoftcap = 1 + (softcap / 100);
+                        maxLength = length;
+                    }
+                    multiplierGain *= multiplierSoftcap;
                 }
                 else
                 {
-                    multiplierGain *= 1.1;
+                    multiplierGain *= multiplierSoftcap;
                 }
+                maxLevel = GameController.data.level;
+
             }
-            maxLevel = GameController.data.level;
-            multiplierButtonText.SetText($"You will receive {GameController.ConvertNumber(multiplierGain)} multiplier on reset");
+            multiplierButtonText.SetText($"You will receive {GameController.ConvertNumber(multiplierGain, 0)} multiplier on reset");
+            GameController.data.multiplierGain = multiplierGain;
         }
         else
         {
@@ -53,10 +76,14 @@ public class Multiplier : MonoBehaviour
     {
         GameController.data.level = 0;
         GameController.data.exp = 0;
-        GameController.levels.levelRequierment = 10;
-        exp = 1;
+        GameController.levels.levelRequierment = 2;
+        expMultiplier = 1;
         multiplier += multiplierGain;
-        exp = math.pow(multiplier, multiplier / (multiplier * 5));
-        multiplierDescription.SetText($"Your {GameController.ConvertNumber(multiplier)} multiplier points increase exp gain by x{GameController.ConvertNumber(exp)}");
+        expMultiplier = math.pow(multiplier, multiplier / (multiplier * 2));
+        multiplierGain = 1;
+        maxLevel = 0;
+        GameController.data.multiplier = multiplier;
+        GameController.data.expMultiplier = expMultiplier;
+        multiplierDescription.SetText($"Your {GameController.ConvertNumber(multiplier, 0)} multiplier points increase exp gain by x{GameController.ConvertNumber(expMultiplier, 2)}");
     }
 }

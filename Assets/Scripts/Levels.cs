@@ -8,26 +8,21 @@ using UnityEngine.UI;
 public class Levels : MonoBehaviour
 {
     public GameController GameController;
-    public double exp;
-    public double level;
-    public double levelRequierment;
-    public float fillNumber;
+    public double levelRequierment = 2;
+    public float fillNumber = 0;
     public Image fill;
     public TMP_Text text;
     public TMP_Text levelText;
 
     public Levels()
     {
-        exp = 0;
-        level = 0;
-        levelRequierment = 10;
-        fillNumber = 0;
+        
     }
 
     public void LevelUp()
     {
-        level++;
-        exp = 0;
         levelRequierment += levelRequierment * 0.2;
+        GameController.data.level++;
+        GameController.data.exp = 0;
     }
 }

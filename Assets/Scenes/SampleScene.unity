@@ -764,7 +764,7 @@ Camera:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_ClearFlags: 2
   m_BackGroundColor: {r: 0.21960786, g: 0.21960786, b: 0.21960786, a: 0}
@@ -784,7 +784,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 54.36223
+  orthographic size: 100
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -985,7 +985,7 @@ Canvas:
   m_GameObject: {fileID: 802620712}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
+  m_RenderMode: 1
   m_Camera: {fileID: 0}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
@@ -1387,7 +1387,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -680, y: 300}
+  m_AnchoredPosition: {x: -687, y: 408.99997}
   m_SizeDelta: {x: 250, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1487654255
@@ -1403,9 +1403,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GameController: {fileID: 1475341718}
-  exp: 0
-  level: 0
-  levelRequierment: 10
+  levelRequierment: 2
   fillNumber: 0
   fill: {fileID: 1933789842}
   text: {fileID: 339116056}
@@ -1774,7 +1772,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -730, y: 150}
+  m_AnchoredPosition: {x: -737, y: 259}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &4720554533037451306
@@ -1793,7 +1791,7 @@ MonoBehaviour:
   multiplier: 0
   multiplierGain: 1
   maxLevel: 0
-  exp: 0
+  expMultiplier: 0
   button: {fileID: 461108400}
   multiplierDescription: {fileID: 209763505}
   multiplierButtonText: {fileID: 97672640}
