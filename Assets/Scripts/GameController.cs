@@ -9,6 +9,7 @@ public class GameController : MonoBehaviour
     public Data data = new Data();
     public Levels levels;
     public Multiplier multiplier;
+    public Rebirth rebirth;
     
     
     private float period = 0.0f;
@@ -61,16 +62,23 @@ public class GameController : MonoBehaviour
         data.expPerTick = multiplier.expMultiplier;
         data.multiplier = multiplier.multiplier;
     }
+    public void BuyRebirth()
+    {
+        rebirth.BuyRebirth();
+        data.expPerTick = 1;
+        data.rebirth = rebirth.rebirth;
+    }
     private void GameLoop()
     {
         LevelUpAction();
+        CheckAvailability();
     }
 
     public string ConvertNumber(double number, int _float)
     {
         if (number >= 1000)
         {
-            return string.Format("{0:#.##e+0}", number);
+            return string.Format("{0:#.##e0}", number);
         }
 
         if (_float == 2)
@@ -79,5 +87,13 @@ public class GameController : MonoBehaviour
         }
 
         return $"{number:F0}";
+    }
+
+    private void CheckAvailability()
+    {
+        if (data.level >= 40 && rebirth.gameObject.activeSelf == false)
+        {
+            rebirth.gameObject.SetActive(true);
+        }
     }
 }

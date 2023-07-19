@@ -10,6 +10,9 @@ public class Data
     public double multiplier = 0;
     public double expMultiplier = 1;
     public double multiplierGain = 0;
+    public double rebirth = 0;
+    public double rebirthMultiplier = 1;
+    public double rebirthGain = 0;
     public Data()
     {
         
