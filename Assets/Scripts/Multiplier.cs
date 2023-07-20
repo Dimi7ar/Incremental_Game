@@ -70,10 +70,12 @@ public class Multiplier : MonoBehaviour
     public void BuyMultiplier()
     {
         ResetMultiplier();
+        GameController.rebirth.ResetRebirth();
+        GameController.rebirth.rebirthGain = 1;
         expMultiplier = 1;
         multiplier += multiplierGain;
         
-        expMultiplier = math.pow(multiplier, multiplier / (multiplier * 1.5));
+        expMultiplier = math.pow(multiplier, 0.66);
         GameController.data.multiplier = multiplier;
         GameController.data.expMultiplier = expMultiplier;
         if (GameController.rebirth.rebirth >= 1)

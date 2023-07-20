@@ -73,7 +73,7 @@ public class Rebirth : MonoBehaviour
         multiplierMultiplier = 1;
         rebirth += rebirthGain;
         
-        multiplierMultiplier = math.pow(rebirth, rebirth / (rebirth * 1.5));
+        multiplierMultiplier = math.pow(rebirth, 0.66);
         GameController.multiplier.multiplierGain = multiplierMultiplier;
         
         rebirthGain = 1;
