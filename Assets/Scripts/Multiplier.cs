@@ -25,7 +25,7 @@ public class Multiplier : MonoBehaviour
 
     public Multiplier()
     {
-        
+        expMultiplier = 1;
     }
     public void Update()
     {
@@ -72,6 +72,9 @@ public class Multiplier : MonoBehaviour
         ResetMultiplier();
         GameController.rebirth.ResetRebirth();
         GameController.rebirth.rebirthGain = 1;
+        GameController.prestige.ResetPrestige();
+        GameController.prestige.prestigeGain = 1;
+        
         expMultiplier = 1;
         multiplier += multiplierGain;
         

@@ -68,7 +68,9 @@ public class Rebirth : MonoBehaviour
         ResetRebirth();
         GameController.multiplier.ResetMultiplier();
         GameController.multiplier.multiplier = 0;
-        GameController.multiplier.expMultiplier = 0;
+        GameController.multiplier.expMultiplier = 1;
+        GameController.prestige.ResetPrestige();
+        GameController.prestige.prestigeGain = 1;
         
         multiplierMultiplier = 1;
         rebirth += rebirthGain;
@@ -76,7 +78,10 @@ public class Rebirth : MonoBehaviour
         multiplierMultiplier = math.pow(rebirth, 0.66);
         GameController.multiplier.multiplierGain = multiplierMultiplier;
         
-        rebirthGain = 1;
+        if (GameController.prestige.prestige >= 1)
+            rebirthGain = 1 * GameController.prestige.rebirthMultiplier;
+        else
+            rebirthGain = 1;
         
         GameController.multiplier.multiplierDescription.SetText($"Your {GameController.ConvertNumber(GameController.multiplier.multiplier, 0)} multiplier points increase exp gain by x{GameController.ConvertNumber(GameController.multiplier.expMultiplier, 2)}");
         rebirthDescription.SetText($"Your {GameController.ConvertNumber(rebirth, 0)} rebirth points increase multiplier gain by x{GameController.ConvertNumber(multiplierMultiplier, 2)}");
