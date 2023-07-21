@@ -71,11 +71,12 @@ public class Prestige : MonoBehaviour
         GameController.rebirth.ResetRebirth();
         GameController.rebirth.rebirth = 0;
         GameController.rebirth.multiplierMultiplier = 1;
-        
+        GameController.rebirth.rebirthGain = 1;
+
         GameController.multiplier.ResetMultiplier();
         GameController.multiplier.multiplier = 0;
         GameController.multiplier.expMultiplier = 1;
-        GameController.multiplier.multiplierGain = 0;
+        GameController.multiplier.multiplierGain = 1;
         
         rebirthMultiplier = 1;
         expMultiplier = 1;

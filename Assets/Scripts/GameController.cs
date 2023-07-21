@@ -12,6 +12,10 @@ public class GameController : MonoBehaviour
     public Rebirth rebirth;
     public Prestige prestige;
     public Creature creature;
+    public Transition transition;
+
+    public GameObject mainGame;
+    public GameObject creatureScreen;
 
     private const double expPerTick = 1;
     
@@ -77,6 +81,16 @@ public class GameController : MonoBehaviour
         prestige.BuyPrestige();
         data.prestige = prestige.prestige;
     }
+
+    public void CreatureReset()
+    {
+        transition.StartTransition();
+        ResetContent();
+        mainGame.SetActive(false);
+        creatureScreen.SetActive(true);
+        transition.EndTransition();
+        
+    }
     private void GameLoop()
     {
         LevelUpAction();
@@ -108,10 +122,28 @@ public class GameController : MonoBehaviour
         {
             prestige.gameObject.SetActive(true);
         }
-
-        if (data.level >= 90 && creature.gameObject.activeSelf == false)
+        if (data.level >= 100 && creature.gameObject.activeSelf == false)
         {
             creature.gameObject.SetActive(true);
         }
+    }
+
+    private void ResetContent()
+    {
+        prestige.ResetPrestige();
+        prestige.prestige = 0;
+        prestige.expMultiplier = 1;
+        prestige.rebirthMultiplier = 1;
+        prestige.prestigeGain = 1;
+        
+        rebirth.ResetRebirth();
+        rebirth.rebirth = 0;
+        rebirth.multiplierMultiplier = 1;
+        rebirth.rebirthGain = 1;
+
+        multiplier.ResetMultiplier();
+        multiplier.multiplier = 0;
+        multiplier.expMultiplier = 1;
+        multiplier.multiplierGain = 1;
     }
 }
