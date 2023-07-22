@@ -88,7 +88,7 @@ public class Prestige : MonoBehaviour
         
         GameController.rebirth.rebirthGain = rebirthMultiplier;
         
-        prestigeGain = 1;
+        prestigeGain = 1 * GameController.prestigeMultiplier;
         
         GameController.multiplier.multiplierDescription.SetText($"Your {GameController.ConvertNumber(GameController.multiplier.multiplier, 0)} multiplier points increase exp gain by x{GameController.ConvertNumber(GameController.multiplier.expMultiplier, 2)}");
         GameController.rebirth.rebirthDescription.SetText($"Your {GameController.ConvertNumber(GameController.rebirth.rebirth, 0)} rebirth points increase multiplier gain by x{GameController.ConvertNumber(GameController.rebirth.multiplierMultiplier, 2)}");

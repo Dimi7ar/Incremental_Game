@@ -82,7 +82,7 @@ public class Multiplier : MonoBehaviour
         GameController.data.multiplier = multiplier;
         GameController.data.expMultiplier = expMultiplier;
         if (GameController.rebirth.rebirth >= 1)
-            multiplierGain = 1 * GameController.rebirth.multiplierMultiplier;
+            multiplierGain = 1 * GameController.rebirth.multiplierMultiplier * GameController.multiplierMultiplier;
         else
             multiplierGain = 1;
         

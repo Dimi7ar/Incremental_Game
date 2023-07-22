@@ -79,7 +79,7 @@ public class Rebirth : MonoBehaviour
         GameController.multiplier.multiplierGain = multiplierMultiplier;
         
         if (GameController.prestige.prestige >= 1)
-            rebirthGain = 1 * GameController.prestige.rebirthMultiplier;
+            rebirthGain = 1 * GameController.prestige.rebirthMultiplier * GameController.rebirthMultiplier;
         else
             rebirthGain = 1;
         

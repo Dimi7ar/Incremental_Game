@@ -28,7 +28,7 @@ public class GameController : MonoBehaviour
         new Card(6, "Increase your exp gain by x2 and rebirth gain by x2"),
         new Card(7, "Increase your exp gain by x2 and prestige gain by x2"),
         new Card(8, "Divide tickspeed by 2"),
-        new Card(9, "Decrease exp requirement by 50%")
+        new Card(9, "Decrease exp requirement by 25%")
     };
 
     public List<Card> cardInventory = new List<Card>();
@@ -36,13 +36,17 @@ public class GameController : MonoBehaviour
 
 
     private const double expPerTick = 1;
+    public double expMultiplier = 1;
+    public double multiplierMultiplier = 1;
+    public double rebirthMultiplier = 1;
+    public double prestigeMultiplier = 1;
+    public double tickspeedMultiplier = 1;
+    public double expRequirementDecrease = 1;
 
     public CanvasGroup mainGameCG;
     public CanvasGroup creatureScreenCG;
-    private bool fadeInMainGame = false;
-    private bool fadeOutMainGame = false;
-    private bool fadeInCreatureScreen = false;
-    private bool fadeOutCreatureScreen = false;
+    private bool fadeIntoCreatureScreen = false;
+    private bool fadeIntoMainGame = false;
     
     
     private float period = 0.0f;
@@ -59,7 +63,7 @@ public class GameController : MonoBehaviour
     }
     public void Update()
     {
-        if (period > 0.2)
+        if (period > (0.2 / tickspeedMultiplier))
         {
             ExpPerSecond();
             period = 0;
@@ -83,7 +87,7 @@ public class GameController : MonoBehaviour
     }
     private void ExpPerSecond()
     {
-        data.expPerTick = expPerTick * multiplier.expMultiplier * prestige.expMultiplier;
+        data.expPerTick = expPerTick * multiplier.expMultiplier * prestige.expMultiplier * expMultiplier;
         data.exp += data.expPerTick;
     }
     public void BuyMultiplier()
@@ -105,14 +109,16 @@ public class GameController : MonoBehaviour
 
     public void CreatureReset()
     {
-        ResetContent();
-        fadeOutMainGame = true;
-        mainGame.SetActive(false);
-        creatureScreen.SetActive(true);
-        fadeInCreatureScreen = true;
-        choice.Align();
-        
-
+        if (creatureScreenCG.alpha == 0)
+        {
+            //ResetContent();
+            fadeIntoCreatureScreen = true;
+            choice.Align();
+        }
+        else
+        {
+            fadeIntoMainGame = true;
+        }
     }
     private void GameLoop()
     {
@@ -172,36 +178,42 @@ public class GameController : MonoBehaviour
 
     private void Fadings()
     {
-        if (fadeInMainGame && mainGameCG.alpha < 1f)
+        if (fadeIntoMainGame)
         {
-            mainGameCG.alpha += Time.deltaTime;
+            if (creatureScreenCG.alpha > 0)
+            {
+                creatureScreenCG.alpha -= Time.deltaTime;
+            }
+            else
+            {
+                creatureScreen.SetActive(false);
+                mainGame.SetActive(true);
+                mainGameCG.alpha += Time.deltaTime;
+            }
+
             if (mainGameCG.alpha >= 1)
             {
-                fadeInMainGame = false;
+                choice.ResetCards();
+                fadeIntoMainGame = false;
             }
         }
-        if (fadeOutMainGame && mainGameCG.alpha > 0f)
+        
+        if (fadeIntoCreatureScreen)
         {
-            mainGameCG.alpha -= Time.deltaTime;
-            if (mainGameCG.alpha <= 0)
+            if (mainGameCG.alpha > 0)
             {
-                fadeOutMainGame = false;
+                mainGameCG.alpha -= Time.deltaTime;
             }
-        }
-        if (fadeInCreatureScreen && creatureScreenCG.alpha < 1f)
-        {
-            creatureScreenCG.alpha += Time.deltaTime;
-            if (mainGameCG.alpha >= 1)
+            else
             {
-                fadeInCreatureScreen = false;
+                mainGame.SetActive(false);
+                creatureScreen.SetActive(true);
+                creatureScreenCG.alpha += Time.deltaTime;
             }
-        }
-        if (fadeOutCreatureScreen && creatureScreenCG.alpha > 0f)
-        {
-            creatureScreenCG.alpha += Time.deltaTime;
-            if (creatureScreenCG.alpha <= 0)
+
+            if (creatureScreenCG.alpha >= 1)
             {
-                fadeOutCreatureScreen = false;
+                fadeIntoCreatureScreen = false;
             }
         }
     }
