@@ -12,7 +12,6 @@ public class Creature : MonoBehaviour
     public Image fill;
     public GameObject button;
     private int count = 1;
-    private List<Card> cards;
 
     public void Update()
     {

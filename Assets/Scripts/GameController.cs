@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
+using Random = Unity.Mathematics.Random;
 
 public class GameController : MonoBehaviour
 {
@@ -12,12 +14,35 @@ public class GameController : MonoBehaviour
     public Rebirth rebirth;
     public Prestige prestige;
     public Creature creature;
-    public Transition transition;
 
     public GameObject mainGame;
     public GameObject creatureScreen;
 
+    public List<Card> cards = new List<Card>()
+    {
+        new Card(1, "Increase your multiplier gain by x5"),
+        new Card(2, "Increase your rebirth gain by x4"),
+        new Card(3, "Increase your prestige gain by x3"),
+        new Card(4, "Increase your exp gain by x5"),
+        new Card(5, "Increase your exp gain by x2 and multiplier gain by x2"),
+        new Card(6, "Increase your exp gain by x2 and rebirth gain by x2"),
+        new Card(7, "Increase your exp gain by x2 and prestige gain by x2"),
+        new Card(8, "Divide tickspeed by 2"),
+        new Card(9, "Decrease exp requirement by 50%")
+    };
+
+    public List<Card> cardInventory = new List<Card>();
+    public ChooseCard choice;
+
+
     private const double expPerTick = 1;
+
+    public CanvasGroup mainGameCG;
+    public CanvasGroup creatureScreenCG;
+    private bool fadeInMainGame = false;
+    private bool fadeOutMainGame = false;
+    private bool fadeInCreatureScreen = false;
+    private bool fadeOutCreatureScreen = false;
     
     
     private float period = 0.0f;
@@ -40,13 +65,9 @@ public class GameController : MonoBehaviour
             period = 0;
         }
         GameLoop();
-        // if (dataSavePeriod > 30 )
-        // {
-        //     DataSave.Save(data);
-        //     dataSavePeriod = 0;
-        // }
         period += Time.deltaTime;
-        // dataSavePeriod += Time.deltaTime;
+        Fadings();
+
     }
 
     private void LevelUpAction()
@@ -84,12 +105,14 @@ public class GameController : MonoBehaviour
 
     public void CreatureReset()
     {
-        transition.StartTransition();
         ResetContent();
+        fadeOutMainGame = true;
         mainGame.SetActive(false);
         creatureScreen.SetActive(true);
-        transition.EndTransition();
+        fadeInCreatureScreen = true;
+        choice.Align();
         
+
     }
     private void GameLoop()
     {
@@ -145,5 +168,41 @@ public class GameController : MonoBehaviour
         multiplier.multiplier = 0;
         multiplier.expMultiplier = 1;
         multiplier.multiplierGain = 1;
+    }
+
+    private void Fadings()
+    {
+        if (fadeInMainGame && mainGameCG.alpha < 1f)
+        {
+            mainGameCG.alpha += Time.deltaTime;
+            if (mainGameCG.alpha >= 1)
+            {
+                fadeInMainGame = false;
+            }
+        }
+        if (fadeOutMainGame && mainGameCG.alpha > 0f)
+        {
+            mainGameCG.alpha -= Time.deltaTime;
+            if (mainGameCG.alpha <= 0)
+            {
+                fadeOutMainGame = false;
+            }
+        }
+        if (fadeInCreatureScreen && creatureScreenCG.alpha < 1f)
+        {
+            creatureScreenCG.alpha += Time.deltaTime;
+            if (mainGameCG.alpha >= 1)
+            {
+                fadeInCreatureScreen = false;
+            }
+        }
+        if (fadeOutCreatureScreen && creatureScreenCG.alpha > 0f)
+        {
+            creatureScreenCG.alpha += Time.deltaTime;
+            if (creatureScreenCG.alpha <= 0)
+            {
+                fadeOutCreatureScreen = false;
+            }
+        }
     }
 }

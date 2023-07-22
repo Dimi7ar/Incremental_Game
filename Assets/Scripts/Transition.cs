@@ -7,29 +7,45 @@ using UnityEngine.UI;
 public class Transition : MonoBehaviour
 {
     public Image image;
-
+    public bool startTransition = false;
+    public bool endTransition = false;
+    private float period = 0.0f;
     void Update()
     {
-        
-    }
-
-    public void StartTransition()
-    {
-        var tempColor = image.color;
-        for (float i = 0; i < 255; i+=(float)25.5)
+        if (startTransition)
         {
-            tempColor.a = i;
-            image.color = tempColor;
+            var tempColor = image.color;
+            while (tempColor.a < 255f)
+            {
+                if (period > 1 && tempColor.a < 255f)
+                {
+                    tempColor.a += 25.5f;
+                    image.color = tempColor;
+                    period = 0;
+                }
+
+                period += Time.deltaTime;
+            }
+
+            startTransition = false;
         }
-    }
 
-    public void EndTransition()
-    {
-        var tempColor = image.color;
-        for (float i = 255; i > 0; i-=(float)25.5)
+        if (endTransition)
         {
-            tempColor.a = i;
-            image.color = tempColor;
+            var tempColor = image.color;
+            while (tempColor.a > 0)
+            {
+                if (period > 1 && tempColor.a > 0f)
+                {
+                    tempColor.a -= 25.5f;
+                    image.color = tempColor;
+                    period = 0;
+                }
+
+                period += Time.deltaTime;
+            }
+
+            endTransition = false;
         }
     }
 }
