@@ -63,7 +63,7 @@ public class GameController : MonoBehaviour
     }
     public void Update()
     {
-        if (period > (0.2 / tickspeedMultiplier))
+        if (period > (0.1 / tickspeedMultiplier))
         {
             ExpPerSecond();
             period = 0;
@@ -82,8 +82,8 @@ public class GameController : MonoBehaviour
         if (data.exp >= levels.levelRequierment)
         {
             levels.LevelUp();
-            levels.levelText.SetText($"Level: <color=green>{ConvertNumber(data.level, 0)}</color>");
         }
+        levels.levelText.SetText($"Level: <color=green>{ConvertNumber(data.level, 0)}</color>");
     }
     private void ExpPerSecond()
     {
@@ -111,13 +111,17 @@ public class GameController : MonoBehaviour
     {
         if (creatureScreenCG.alpha == 0)
         {
-            //ResetContent();
+            ResetContent();
             fadeIntoCreatureScreen = true;
             choice.Align();
         }
         else
         {
             fadeIntoMainGame = true;
+            creature.fillNumber = 0;
+            creature.button.SetActive(false);
+            creature.gameObject.SetActive(false);
+            creature.count++;
         }
     }
     private void GameLoop()
@@ -159,21 +163,24 @@ public class GameController : MonoBehaviour
 
     private void ResetContent()
     {
-        prestige.ResetPrestige();
-        prestige.prestige = 0;
-        prestige.expMultiplier = 1;
-        prestige.rebirthMultiplier = 1;
-        prestige.prestigeGain = 1;
+        multiplier.ResetMultiplier();
+        multiplier.multiplier = 0;
+        multiplier.expMultiplier = 1;
+        multiplier.multiplierGain = 1;
+        multiplier.multiplierDescription.SetText($"Your {ConvertNumber(multiplier.multiplier, 0)} multiplier points increase exp gain by x{ConvertNumber(multiplier.expMultiplier, 2)}");
         
         rebirth.ResetRebirth();
         rebirth.rebirth = 0;
         rebirth.multiplierMultiplier = 1;
         rebirth.rebirthGain = 1;
-
-        multiplier.ResetMultiplier();
-        multiplier.multiplier = 0;
-        multiplier.expMultiplier = 1;
-        multiplier.multiplierGain = 1;
+        rebirth.rebirthDescription.SetText($"Your {ConvertNumber(rebirth.rebirth, 0)} rebirth points increase multiplier gain by x{ConvertNumber(rebirth.multiplierMultiplier, 2)}");
+        
+        prestige.ResetPrestige();
+        prestige.prestige = 0;
+        prestige.expMultiplier = 1;
+        prestige.rebirthMultiplier = 1;
+        prestige.prestigeGain = 1;
+        prestige.prestigeDescription.SetText($"Your {ConvertNumber(prestige.prestige, 0)} prestige points increase rebirth gain by x{ConvertNumber(prestige.rebirthMultiplier, 2)} and exp gain by x{ConvertNumber(prestige.expMultiplier, 2)}");
     }
 
     private void Fadings()

@@ -21,14 +21,12 @@ public class Levels : MonoBehaviour
 
     public void LevelUp()
     {
-        if (GameController.data.level < 25)
-        {
+        if (GameController.data.level <= 10)
             levelRequierment += levelRequierment * 0.2 * GameController.expRequirementDecrease;
-        }
-        else
-        {
+        else if (GameController.data.level <= 100)
             levelRequierment += levelRequierment * 0.25 * GameController.expRequirementDecrease;
-        }
+        else
+            levelRequierment += levelRequierment * 0.5 * GameController.expRequirementDecrease;
         GameController.data.level++;
         GameController.data.exp = 0;
     }

@@ -11,13 +11,13 @@ public class Creature : MonoBehaviour
     public float fillNumber = 0;
     public Image fill;
     public GameObject button;
-    private int count = 1;
+    public int count = 1;
 
     public void Update()
     {
         if (fillNumber < 1)
         {
-            fillNumber = (float)((GameController.data.level - (100 * count)) / 100);
+            fillNumber = (float)((GameController.data.level - 100) / (100 * count));
             fill.fillAmount = fillNumber;
         }
         if (fillNumber >= 1)

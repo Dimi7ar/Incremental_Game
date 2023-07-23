@@ -71,7 +71,7 @@ public class Multiplier : MonoBehaviour
     {
         ResetMultiplier();
         GameController.rebirth.ResetRebirth();
-        GameController.rebirth.rebirthGain = 1;
+        GameController.rebirth.rebirthGain = 1 * GameController.prestige.rebirthMultiplier;
         GameController.prestige.ResetPrestige();
         GameController.prestige.prestigeGain = 1;
         

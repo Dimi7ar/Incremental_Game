@@ -83,8 +83,8 @@ public class Prestige : MonoBehaviour
 
         prestige += prestigeGain;
         
-        expMultiplier = math.pow(prestige, 0.66);
-        rebirthMultiplier = math.pow(prestige, 0.44);
+        expMultiplier = math.pow(prestige, 0.44);
+        rebirthMultiplier = math.pow(prestige, 0.33);
         
         GameController.rebirth.rebirthGain = rebirthMultiplier;
         
