@@ -53,7 +53,7 @@ public class Rebirth : MonoBehaviour
                     maxLevel = GameController.data.level;
                 }
                 rebirthButtonText.SetText(
-                    $"You will receive {GameController.ConvertNumber(rebirthGain, 0)} rebirth on reset");
+                    $"You will receive {GameController.ConvertNumber(rebirthGain * GameController.prestige.rebirthMultiplier * GameController.rebirthMultiplier, 0)} rebirth on reset");
                 GameController.data.rebirthGain = rebirthGain;
             }
             else
@@ -69,19 +69,16 @@ public class Rebirth : MonoBehaviour
         GameController.multiplier.ResetMultiplier();
         GameController.multiplier.multiplier = 0;
         GameController.multiplier.expMultiplier = 1;
+        GameController.multiplier.multiplierGain = 1;
         GameController.prestige.ResetPrestige();
         GameController.prestige.prestigeGain = 1;
         
         multiplierMultiplier = 1;
-        rebirth += rebirthGain;
+        rebirth += rebirthGain * GameController.prestige.rebirthMultiplier * GameController.rebirthMultiplier;
         
-        multiplierMultiplier = math.pow(rebirth, 0.44);
-        GameController.multiplier.multiplierGain = multiplierMultiplier;
+        multiplierMultiplier = math.pow(rebirth, 0.66);
         
-        if (GameController.prestige.prestige >= 1)
-            rebirthGain = 1 * GameController.prestige.rebirthMultiplier * GameController.rebirthMultiplier;
-        else
-            rebirthGain = 1;
+        rebirthGain = 1;
         
         GameController.multiplier.multiplierDescription.SetText($"Your {GameController.ConvertNumber(GameController.multiplier.multiplier, 0)} multiplier points increase exp gain by x{GameController.ConvertNumber(GameController.multiplier.expMultiplier, 2)}");
         rebirthDescription.SetText($"Your {GameController.ConvertNumber(rebirth, 0)} rebirth points increase multiplier gain by x{GameController.ConvertNumber(multiplierMultiplier, 2)}");

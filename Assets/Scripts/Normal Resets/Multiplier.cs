@@ -55,7 +55,7 @@ public class Multiplier : MonoBehaviour
                 multiplierGain *= multiplierSoftcap;
                 maxLevel = GameController.data.level;
             }
-            multiplierButtonText.SetText($"You will receive {GameController.ConvertNumber(multiplierGain, 0)} multiplier on reset");
+            multiplierButtonText.SetText($"You will receive {GameController.ConvertNumber(multiplierGain * GameController.rebirth.multiplierMultiplier * GameController.multiplierMultiplier, 0)} multiplier on reset");
             GameController.data.multiplierGain = multiplierGain;
         }
         else
@@ -71,20 +71,17 @@ public class Multiplier : MonoBehaviour
     {
         ResetMultiplier();
         GameController.rebirth.ResetRebirth();
-        GameController.rebirth.rebirthGain = 1 * GameController.prestige.rebirthMultiplier;
+        GameController.rebirth.rebirthGain = 1;
         GameController.prestige.ResetPrestige();
         GameController.prestige.prestigeGain = 1;
         
         expMultiplier = 1;
-        multiplier += multiplierGain;
+        multiplier += multiplierGain * GameController.rebirth.multiplierMultiplier * GameController.multiplierMultiplier;
         
         expMultiplier = math.pow(multiplier, 0.66);
         GameController.data.multiplier = multiplier;
         GameController.data.expMultiplier = expMultiplier;
-        if (GameController.rebirth.rebirth >= 1)
-            multiplierGain = 1 * GameController.rebirth.multiplierMultiplier * GameController.multiplierMultiplier;
-        else
-            multiplierGain = 1;
+        multiplierGain = 1;
         
         multiplierDescription.SetText($"Your {GameController.ConvertNumber(multiplier, 0)} multiplier points increase exp gain by x{GameController.ConvertNumber(expMultiplier, 2)}");
     }

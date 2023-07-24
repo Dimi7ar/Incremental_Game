@@ -54,7 +54,7 @@ public class Prestige : MonoBehaviour
                     maxLevel = GameController.data.level;
                 }
                 prestigeButtonText.SetText(
-                    $"You will receive {GameController.ConvertNumber(prestigeGain, 0)} prestige on reset");
+                    $"You will receive {GameController.ConvertNumber(prestigeGain * GameController.prestigeMultiplier, 0)} prestige on reset");
                 GameController.data.prestigeGain = prestigeGain;
             }
             else
@@ -81,14 +81,12 @@ public class Prestige : MonoBehaviour
         rebirthMultiplier = 1;
         expMultiplier = 1;
 
-        prestige += prestigeGain;
+        prestige += prestigeGain * GameController.prestigeMultiplier;
         
-        expMultiplier = math.pow(prestige, 0.44);
-        rebirthMultiplier = math.pow(prestige, 0.33);
+        expMultiplier = math.pow(prestige, 0.66);
+        rebirthMultiplier = math.pow(prestige, 0.44);
         
-        GameController.rebirth.rebirthGain = rebirthMultiplier;
-        
-        prestigeGain = 1 * GameController.prestigeMultiplier;
+        prestigeGain = 1;
         
         GameController.multiplier.multiplierDescription.SetText($"Your {GameController.ConvertNumber(GameController.multiplier.multiplier, 0)} multiplier points increase exp gain by x{GameController.ConvertNumber(GameController.multiplier.expMultiplier, 2)}");
         GameController.rebirth.rebirthDescription.SetText($"Your {GameController.ConvertNumber(GameController.rebirth.rebirth, 0)} rebirth points increase multiplier gain by x{GameController.ConvertNumber(GameController.rebirth.multiplierMultiplier, 2)}");

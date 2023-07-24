@@ -5,7 +5,6 @@ using TMPro;
 using UnityEngine;
 using Unity.Mathematics;
 using UnityEngine.UI;
-using Unity.UI;
 using Random = UnityEngine.Random;
 
 public class ChooseCard : MonoBehaviour
