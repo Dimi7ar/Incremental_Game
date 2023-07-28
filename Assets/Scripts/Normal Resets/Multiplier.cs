@@ -19,14 +19,26 @@ public class Multiplier : MonoBehaviour
     public TMP_Text multiplierDescription;
     public TMP_Text multiplierButtonText;
 
-    private double multiplierSoftcap = 1.5;
-    private double hardcap = 25;
-    private double softcap = 0;
+    private double softcap = 1.5;
+    private double cap = 25;
+    private double hardcap = 0;
 
     public Multiplier()
     {
-        expMultiplier = 1;
+        
     }
+
+    public void Start()
+    {
+        multiplier = GameController.data.multiplier;
+        multiplierGain = GameController.data.multiplier_Gain;
+        expMultiplier = GameController.data.multiplier_Exp_Multiplier;
+        softcap = GameController.data.multiplier_Softcap;
+        hardcap = GameController.data.multiplier_Hardcap;
+        maxLevel = GameController.data.multiplier_Max_Level;
+        multiplierDescription.SetText($"Your {GameController.ConvertNumber(multiplier, 0)} multiplier points increase exp gain by x{GameController.ConvertNumber(expMultiplier, 2)}");
+    }
+
     public void Update()
     {
         if (GameController.data.level >= 5)
@@ -36,27 +48,31 @@ public class Multiplier : MonoBehaviour
             {
                 if (GameController.data.level <= 15)
                 {
-                    softcap += hardcap;
-                    multiplierSoftcap -= multiplierSoftcap / softcap;
+                    hardcap += cap;
+                    softcap -= softcap / hardcap;
                 }
                 else if (GameController.data.level <= 10000)
                 {
-                    hardcap = 40;
-                    softcap += hardcap;
-                    multiplierSoftcap -= multiplierSoftcap / softcap;
+                    cap = 40;
+                    hardcap += cap;
+                    softcap -= softcap / hardcap;
                 }
                 else
                 {   
-                    hardcap = 100;
-                    softcap += hardcap;
-                    multiplierSoftcap -= multiplierSoftcap / softcap;
+                    cap = 100;
+                    hardcap += cap;
+                    softcap -= softcap / hardcap;
                 }
-
-                multiplierGain *= multiplierSoftcap;
+                GameController.data.multiplier_Softcap = softcap;
+                GameController.data.multiplier_Hardcap = hardcap;
+                
+                multiplierGain *= softcap;
+                GameController.data.multiplier_Gain = multiplierGain;
+                
                 maxLevel = GameController.data.level;
+                GameController.data.multiplier_Max_Level = maxLevel;
             }
             multiplierButtonText.SetText($"You will receive {GameController.ConvertNumber(multiplierGain * GameController.rebirth.multiplierMultiplier * GameController.multiplierMultiplier, 0)} multiplier on reset");
-            GameController.data.multiplierGain = multiplierGain;
         }
         else
         {
@@ -69,19 +85,19 @@ public class Multiplier : MonoBehaviour
 
     public void BuyMultiplier()
     {
-        ResetMultiplier();
-        GameController.rebirth.ResetRebirth();
-        GameController.rebirth.rebirthGain = 1;
-        GameController.prestige.ResetPrestige();
-        GameController.prestige.prestigeGain = 1;
+        Reset();
         
         expMultiplier = 1;
-        multiplier += multiplierGain * GameController.rebirth.multiplierMultiplier * GameController.multiplierMultiplier;
+        GameController.data.multiplier_Exp_Multiplier = 1;
         
+        multiplier += multiplierGain * GameController.rebirth.multiplierMultiplier * GameController.multiplierMultiplier;
         expMultiplier = math.pow(multiplier, 0.66);
+        
         GameController.data.multiplier = multiplier;
-        GameController.data.expMultiplier = expMultiplier;
+        GameController.data.multiplier_Exp_Multiplier = expMultiplier;
+        
         multiplierGain = 1;
+        GameController.data.multiplier_Gain = multiplierGain;
         
         multiplierDescription.SetText($"Your {GameController.ConvertNumber(multiplier, 0)} multiplier points increase exp gain by x{GameController.ConvertNumber(expMultiplier, 2)}");
     }
@@ -91,9 +107,24 @@ public class Multiplier : MonoBehaviour
         GameController.data.level = 0;
         GameController.data.exp = 0;
         GameController.levels.levelRequierment = 2;
-        multiplierSoftcap = 1.5;
+        softcap = 1.5;
         maxLevel = 0;
-        hardcap = 25;
-        softcap = 0;
+        cap = 25;
+        hardcap = 0;
+        GameController.data.multiplier_Softcap = softcap;
+        GameController.data.multiplier_Max_Level = maxLevel;
+        GameController.data.multiplier_Hardcap = hardcap;
+        GameController.data.levelRequirement = 2;
+    }
+
+    public void Reset()
+    {
+        ResetMultiplier();
+        GameController.rebirth.ResetRebirth();
+        GameController.rebirth.rebirthGain = 1;
+        GameController.data.rebirth_Gain = 1;
+        GameController.prestige.ResetPrestige();
+        GameController.prestige.prestigeGain = 1;
+        GameController.data.prestige_Gain = 1;
     }
 }

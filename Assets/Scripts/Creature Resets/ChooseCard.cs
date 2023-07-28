@@ -219,6 +219,8 @@ public class ChooseCard : MonoBehaviour
         card1Button.interactable = false;
         CardEffect(card1Object.card.id);
         hideCard = true;
+        GameController.data.cards = GameController.cards;
+        GameController.data.card_Inventory = GameController.cardInventory;
     }
     public void Choose2()
     {
@@ -228,6 +230,8 @@ public class ChooseCard : MonoBehaviour
         card2Button.interactable = false;
         CardEffect(card2Object.card.id);
         hideCard = true;
+        GameController.data.cards = GameController.cards;
+        GameController.data.card_Inventory = GameController.cardInventory;
     }
     public void Choose3()
     {
@@ -237,6 +241,8 @@ public class ChooseCard : MonoBehaviour
         card3Button.interactable = false;
         CardEffect(card3Object.card.id);
         hideCard = true;
+        GameController.data.cards = GameController.cards;
+        GameController.data.card_Inventory = GameController.cardInventory;
     }
 
     public void CardEffect(int id)
@@ -245,33 +251,45 @@ public class ChooseCard : MonoBehaviour
         {
             case 1:
                 GameController.multiplierMultiplier *= 5;
+                GameController.data.card_Multiplier_Multiplier = GameController.multiplierMultiplier;
                 break;
             case 2:
                 GameController.rebirthMultiplier *= 4;
+                GameController.data.card_Rebirth_Multiplier = GameController.rebirthMultiplier;
                 break;
             case 3:
                 GameController.prestigeMultiplier *= 3;
+                GameController.data.card_Prestige_Multiplier = GameController.prestigeMultiplier;
                 break;
             case 4:
                 GameController.expMultiplier *= 5;
+                GameController.data.card_Exp_Multiplier = GameController.expMultiplier;
                 break;
             case 5:
                 GameController.expMultiplier *= 2;
                 GameController.multiplierMultiplier *= 2;
+                GameController.data.card_Exp_Multiplier = GameController.expMultiplier;
+                GameController.data.card_Multiplier_Multiplier = GameController.multiplierMultiplier;
                 break;
             case 6:
                 GameController.expMultiplier *= 2;
                 GameController.rebirthMultiplier *= 2;
+                GameController.data.card_Exp_Multiplier = GameController.expMultiplier;
+                GameController.data.card_Rebirth_Multiplier = GameController.rebirthMultiplier;
                 break;
             case 7:
                 GameController.expMultiplier *= 2;
                 GameController.prestigeMultiplier *= 2;
+                GameController.data.card_Exp_Multiplier = GameController.expMultiplier;
+                GameController.data.card_Prestige_Multiplier = GameController.prestigeMultiplier;
                 break;
             case 8:
                 GameController.tickspeedMultiplier *= 2;
+                GameController.data.card_Tickspeed_Multiplier = GameController.tickspeedMultiplier;
                 break;
             case 9:
                 GameController.expRequirementDecrease -= 0.25;
+                GameController.data.card_Exp_Requirement_Decrease = GameController.expRequirementDecrease;
                 break;
         }
     }

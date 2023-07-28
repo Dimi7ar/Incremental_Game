@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,7 +9,7 @@ using Random = Unity.Mathematics.Random;
 
 public class GameController : MonoBehaviour
 {
-    public Data data = new Data();
+    public Data data;
     public Levels levels;
     public Multiplier multiplier;
     public Rebirth rebirth;
@@ -28,12 +29,12 @@ public class GameController : MonoBehaviour
         new Card(6, "Increase your exp gain by x2 and rebirth gain by x2"),
         new Card(7, "Increase your exp gain by x2 and prestige gain by x2"),
         new Card(8, "Divide tickspeed by 2"),
-        new Card(9, "Decrease exp requirement by 25%")
+        new Card(9, "Decrease level requirement by 25%")
     };
 
     public List<Card> cardInventory = new List<Card>();
     public ChooseCard choice;
-
+    public TMP_Text cardEffect;
 
     private const double expPerTick = 1;
     public double expMultiplier = 1;
@@ -51,6 +52,9 @@ public class GameController : MonoBehaviour
     
     private float period = 0.0f;
     // private float dataSavePeriod = 0.0f;
+    private float SaveTime = 0.0f;
+    private const string fileName = "PlayerData";
+    public TMP_Text lastSave;
 
     public GameController()
     {
@@ -59,7 +63,8 @@ public class GameController : MonoBehaviour
 
     public void Start()
     {
-        // DataSave.Load(data);
+        data = DataSave.SaveExists(fileName) ? DataSave.LoadData<Data>(fileName) : new Data();
+        levels.levelRequierment = data.levelRequirement;
     }
     public void Update()
     {
@@ -72,6 +77,13 @@ public class GameController : MonoBehaviour
         period += Time.deltaTime;
         Fadings();
 
+        SaveTime += Time.deltaTime;
+        lastSave.SetText($"Last save: {SaveTime:F0}s ago");
+        if (SaveTime >= 10)
+        {
+            DataSave.SaveData(data, fileName);
+            SaveTime = 0;
+        }
     }
 
     private void LevelUpAction()
@@ -83,6 +95,7 @@ public class GameController : MonoBehaviour
         {
             levels.LevelUp();
         }
+        data.levelRequirement = levels.levelRequierment;
         levels.levelText.SetText($"Level: <color=green>{ConvertNumber(data.level, 0)}</color>");
     }
     private void ExpPerSecond()
@@ -95,6 +108,7 @@ public class GameController : MonoBehaviour
         multiplier.BuyMultiplier();
         data.multiplier = multiplier.multiplier;
     }
+    
     public void BuyRebirth()
     {
         rebirth.BuyRebirth();
@@ -118,6 +132,7 @@ public class GameController : MonoBehaviour
         else
         {
             fadeIntoMainGame = true;
+            cardEffect.SetText(CardText());
             creature.fillNumber = 0;
             creature.button.SetActive(false);
             creature.gameObject.SetActive(false);
@@ -167,12 +182,18 @@ public class GameController : MonoBehaviour
         multiplier.multiplier = 0;
         multiplier.expMultiplier = 1;
         multiplier.multiplierGain = 1;
+        data.multiplier = 0;
+        data.multiplier_Exp_Multiplier = 1;
+        data.multiplier_Gain = 1;
         multiplier.multiplierDescription.SetText($"Your {ConvertNumber(multiplier.multiplier, 0)} multiplier points increase exp gain by x{ConvertNumber(multiplier.expMultiplier, 2)}");
         
         rebirth.ResetRebirth();
         rebirth.rebirth = 0;
         rebirth.multiplierMultiplier = 1;
         rebirth.rebirthGain = 1;
+        data.rebirth = 0;
+        data.rebirth_Multiplier_Multiplier = 1;
+        data.rebirth_Gain = 1;
         rebirth.rebirthDescription.SetText($"Your {ConvertNumber(rebirth.rebirth, 0)} rebirth points increase multiplier gain by x{ConvertNumber(rebirth.multiplierMultiplier, 2)}");
         
         prestige.ResetPrestige();
@@ -180,6 +201,10 @@ public class GameController : MonoBehaviour
         prestige.expMultiplier = 1;
         prestige.rebirthMultiplier = 1;
         prestige.prestigeGain = 1;
+        data.prestige = 0;
+        data.prestige_Exp_Multiplier = 1;
+        data.prestige_Rebirth_Multiplier = 1;
+        data.prestige_Gain = 1;
         prestige.prestigeDescription.SetText($"Your {ConvertNumber(prestige.prestige, 0)} prestige points increase rebirth gain by x{ConvertNumber(prestige.rebirthMultiplier, 2)} and exp gain by x{ConvertNumber(prestige.expMultiplier, 2)}");
     }
 
@@ -224,4 +249,38 @@ public class GameController : MonoBehaviour
             }
         }
     }
+
+    private string CardText()
+    {
+        StringBuilder sb = new StringBuilder();
+        sb.Append("Card effects: ");
+        if (expMultiplier > 1)
+        {
+            sb.Append($"{expMultiplier}x exp, ");
+        }
+        if (multiplierMultiplier > 1)
+        {
+            sb.Append($"{multiplierMultiplier}x multiplier, ");
+        }
+        if (rebirthMultiplier > 1)
+        {
+            sb.Append($"{rebirthMultiplier}x rebirth, ");
+        }
+        if (prestigeMultiplier > 1)
+        {
+            sb.Append($"{prestigeMultiplier}x prestige, ");
+        }
+        if (tickspeedMultiplier > 1)
+        {
+            sb.Append($"TPS / {tickspeedMultiplier}, ");
+        }
+        if (expRequirementDecrease > 1)
+        {
+            sb.Append($"LevelReq * {expRequirementDecrease}, ");
+        }
+        sb.Remove(sb.Length - 2, 2);
+        return sb.ToString().TrimEnd();
+    }
+
+   
 }

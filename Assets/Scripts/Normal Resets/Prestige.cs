@@ -18,9 +18,9 @@ public class Prestige : MonoBehaviour
     public TMP_Text prestigeButtonText;
     public double maxLevel;
     
-    private double prestigeSoftcap = 1.5;
-    private double hardcap = 25;
-    private double softcap = 0;
+    private double softcap = 1.5;
+    private double cap = 25;
+    private double hardcap = 0;
 
     public Prestige()
     {
@@ -35,27 +35,29 @@ public class Prestige : MonoBehaviour
                 {
                     if (GameController.data.level <= 105)
                     {
-                        softcap += hardcap;
-                        prestigeSoftcap -= prestigeSoftcap / softcap;
+                        hardcap += cap;
+                        softcap -= softcap / hardcap;
                     }
                     else if (GameController.data.level <= 100000)
                     {
-                        hardcap = 40;
-                        softcap += hardcap;
-                        prestigeSoftcap -= prestigeSoftcap / softcap;
+                        cap = 40;
+                        hardcap += cap;
+                        softcap -= softcap / hardcap;
                     }
                     else
                     {   
-                        hardcap = 100;
-                        softcap += hardcap;
-                        prestigeSoftcap -= prestigeSoftcap / softcap;
+                        cap = 100;
+                        hardcap += cap;
+                        softcap -= softcap / hardcap;
                     }
-                    prestigeGain *= prestigeSoftcap;
+                    prestigeGain *= softcap;
+                    GameController.data.prestige_Gain = prestigeGain;
+                    
                     maxLevel = GameController.data.level;
                 }
                 prestigeButtonText.SetText(
                     $"You will receive {GameController.ConvertNumber(prestigeGain * GameController.prestigeMultiplier, 0)} prestige on reset");
-                GameController.data.prestigeGain = prestigeGain;
+                GameController.data.prestige_Gain = prestigeGain;
             }
             else
             {
@@ -66,17 +68,7 @@ public class Prestige : MonoBehaviour
 
     public void BuyPrestige()
     {
-        ResetPrestige();
-        
-        GameController.rebirth.ResetRebirth();
-        GameController.rebirth.rebirth = 0;
-        GameController.rebirth.multiplierMultiplier = 1;
-        GameController.rebirth.rebirthGain = 1;
-
-        GameController.multiplier.ResetMultiplier();
-        GameController.multiplier.multiplier = 0;
-        GameController.multiplier.expMultiplier = 1;
-        GameController.multiplier.multiplierGain = 1;
+        Reset();
         
         rebirthMultiplier = 1;
         expMultiplier = 1;
@@ -85,8 +77,12 @@ public class Prestige : MonoBehaviour
         
         expMultiplier = math.pow(prestige, 0.66);
         rebirthMultiplier = math.pow(prestige, 0.44);
+
+        GameController.data.prestige_Exp_Multiplier = expMultiplier;
+        GameController.data.prestige_Rebirth_Multiplier = rebirthMultiplier;
         
         prestigeGain = 1;
+        GameController.data.prestige_Gain = 1;
         
         GameController.multiplier.multiplierDescription.SetText($"Your {GameController.ConvertNumber(GameController.multiplier.multiplier, 0)} multiplier points increase exp gain by x{GameController.ConvertNumber(GameController.multiplier.expMultiplier, 2)}");
         GameController.rebirth.rebirthDescription.SetText($"Your {GameController.ConvertNumber(GameController.rebirth.rebirth, 0)} rebirth points increase multiplier gain by x{GameController.ConvertNumber(GameController.rebirth.multiplierMultiplier, 2)}");
@@ -98,9 +94,29 @@ public class Prestige : MonoBehaviour
         GameController.data.level = 0;
         GameController.data.exp = 0;
         GameController.levels.levelRequierment = 2;
-        prestigeSoftcap = 1.5;
+        softcap = 1.5;
         maxLevel = 0;
-        hardcap = 25;
-        softcap = 0;
+        cap = 25;
+        hardcap = 0;
+    }
+
+    public void Reset()
+    {
+        ResetPrestige();
+        GameController.rebirth.ResetRebirth();
+        GameController.rebirth.rebirth = 0;
+        GameController.rebirth.multiplierMultiplier = 1;
+        GameController.rebirth.rebirthGain = 1;
+        GameController.data.rebirth = 0;
+        GameController.data.rebirth_Multiplier_Multiplier = 1;
+        GameController.data.rebirth_Gain = 1;
+
+        GameController.multiplier.ResetMultiplier();
+        GameController.multiplier.multiplier = 0;
+        GameController.multiplier.expMultiplier = 1;
+        GameController.multiplier.multiplierGain = 1;
+        GameController.data.multiplier = 0;
+        GameController.data.multiplier_Exp_Multiplier = 1;
+        GameController.data.multiplier_Gain = 1;
     }
 }

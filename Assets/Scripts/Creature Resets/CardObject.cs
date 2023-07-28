@@ -9,7 +9,4 @@ public class CardObject : MonoBehaviour
     public ChooseCard choice;
     public Card card;
     public TMP_Text descriptionText;
-
-
-    
 }

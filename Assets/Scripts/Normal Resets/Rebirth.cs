@@ -17,9 +17,9 @@ public class Rebirth : MonoBehaviour
     public TMP_Text rebirthButtonText;
     public double maxLevel;
     
-    private double rebirthSoftcap = 1.5;
-    private double hardcap = 25;
-    private double softcap = 0;
+    private double softcap = 1.5;
+    private double cap = 25;
+    private double hardcap = 0;
 
     public Rebirth()
     {
@@ -34,27 +34,27 @@ public class Rebirth : MonoBehaviour
                 {
                     if (GameController.data.level <= 55)
                     {
-                        softcap += hardcap;
-                        rebirthSoftcap -= rebirthSoftcap / softcap;
+                        hardcap += cap;
+                        softcap -= softcap / hardcap;
                     }
                     else if (GameController.data.level <= 60000)
                     {
-                        hardcap = 40;
-                        softcap += hardcap;
-                        rebirthSoftcap -= rebirthSoftcap / softcap;
+                        cap = 40;
+                        hardcap += cap;
+                        softcap -= softcap / hardcap;
                     }
                     else
                     {   
-                        hardcap = 100;
-                        softcap += hardcap;
-                        rebirthSoftcap -= rebirthSoftcap / softcap;
+                        cap = 100;
+                        hardcap += cap;
+                        softcap -= softcap / hardcap;
                     }
-                    rebirthGain *= rebirthSoftcap;
+                    rebirthGain *= softcap;
                     maxLevel = GameController.data.level;
                 }
                 rebirthButtonText.SetText(
                     $"You will receive {GameController.ConvertNumber(rebirthGain * GameController.prestige.rebirthMultiplier * GameController.rebirthMultiplier, 0)} rebirth on reset");
-                GameController.data.rebirthGain = rebirthGain;
+                GameController.data.rebirth_Gain = rebirthGain;
             }
             else
             {
@@ -65,20 +65,16 @@ public class Rebirth : MonoBehaviour
 
     public void BuyRebirth()
     {
-        ResetRebirth();
-        GameController.multiplier.ResetMultiplier();
-        GameController.multiplier.multiplier = 0;
-        GameController.multiplier.expMultiplier = 1;
-        GameController.multiplier.multiplierGain = 1;
-        GameController.prestige.ResetPrestige();
-        GameController.prestige.prestigeGain = 1;
+        Reset();
         
         multiplierMultiplier = 1;
         rebirth += rebirthGain * GameController.prestige.rebirthMultiplier * GameController.rebirthMultiplier;
         
         multiplierMultiplier = math.pow(rebirth, 0.66);
+        GameController.data.rebirth_Multiplier_Multiplier = multiplierMultiplier;
         
         rebirthGain = 1;
+        GameController.data.rebirth_Gain = 1;
         
         GameController.multiplier.multiplierDescription.SetText($"Your {GameController.ConvertNumber(GameController.multiplier.multiplier, 0)} multiplier points increase exp gain by x{GameController.ConvertNumber(GameController.multiplier.expMultiplier, 2)}");
         rebirthDescription.SetText($"Your {GameController.ConvertNumber(rebirth, 0)} rebirth points increase multiplier gain by x{GameController.ConvertNumber(multiplierMultiplier, 2)}");
@@ -89,9 +85,25 @@ public class Rebirth : MonoBehaviour
         GameController.data.level = 0;
         GameController.data.exp = 0;
         GameController.levels.levelRequierment = 2;
-        rebirthSoftcap = 1.5;
+        softcap = 1.5;
         maxLevel = 0;
-        hardcap = 25;
-        softcap = 0;
+        cap = 25;
+        hardcap = 0;
+    }
+
+    public void Reset()
+    {
+        ResetRebirth();
+        GameController.multiplier.ResetMultiplier();
+        GameController.multiplier.multiplier = 0;
+        GameController.multiplier.expMultiplier = 1;
+        GameController.multiplier.multiplierGain = 1;
+        GameController.data.multiplier = 0;
+        GameController.data.multiplier_Exp_Multiplier = 1;
+        GameController.data.multiplier_Gain = 1;
+        
+        GameController.prestige.ResetPrestige();
+        GameController.prestige.prestigeGain = 1;
+        GameController.data.prestige_Gain = 1;
     }
 }

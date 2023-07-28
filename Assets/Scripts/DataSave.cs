@@ -1,85 +1,78 @@
-﻿/*using System;
+﻿using System;
 using System.IO;
-using System.Runtime.InteropServices;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class DataSave
+public class DataSave : MonoBehaviour
 {
-    [DllImport ( "__Internal" )]
-    private static extern void SyncFiles ( );
+    //Credits to Considera Core on youtube, helped me a lot
+    private const string FileType = ".txt";
+    private static string SavePath => Application.persistentDataPath + "/Saves/";
+    private static string BackUpSavePath => Application.persistentDataPath + "/BackUps/";
 
-    [DllImport ( "__Internal" )]
-    private static extern void WindowAlert ( string message );
-
-    
-    public static void Save ( Data data )
+    private static int SaveCount;
+    public static void SaveData<T>(T data, string fileName)
     {
-        string dataPath = string.Format ( "{0}/Data.dat", Application.persistentDataPath );
-        BinaryFormatter binaryFormatter = new BinaryFormatter ( );
-        FileStream fileStream;
+        Directory.CreateDirectory(SavePath);
+        Directory.CreateDirectory(BackUpSavePath);
+        
+        if (SaveCount % 5 == 0)
+            Save(BackUpSavePath);
+        Save(SavePath);
+        SaveCount++;
 
-        try
+        void Save(string path)
         {
-            if ( File.Exists ( dataPath ) )
+            using (StreamWriter writer = new StreamWriter(path + fileName + FileType))
             {
-                File.WriteAllText ( dataPath, string.Empty );
-                fileStream = File.Open ( dataPath, FileMode.Open );
+                BinaryFormatter formatter = new BinaryFormatter();
+                MemoryStream memoryStream = new MemoryStream();
+                formatter.Serialize(memoryStream, data);
+                string dataToSave = Convert.ToBase64String(memoryStream.ToArray());
+                writer.WriteLine(dataToSave);
             }
-            else
-            {
-                fileStream = File.Create ( dataPath );
-            }
-
-            binaryFormatter.Serialize ( fileStream, data );
-            fileStream.Close ( );
-
-            if ( Application.platform == RuntimePlatform.WebGLPlayer )
-            {
-                SyncFiles ( );
-            }
-        }
-        catch ( Exception e )
-        {
-            PlatformSafeMessage ( "Failed to Save: " + e.Message );
         }
     }
 
-    public static Data Load (Data data )
+    public static T LoadData<T>(string fileName)
     {
-        //Stats stats = null;
-        string dataPath = string.Format ( "{0}/Stats.dat", Application.persistentDataPath );
+        Directory.CreateDirectory(SavePath);
+        Directory.CreateDirectory(BackUpSavePath);
 
-        try
+        bool backUpInNeed = false;
+        T dataToReturn;
+        
+        Load(SavePath);
+        if (backUpInNeed)
         {
-            if ( File.Exists ( dataPath ) )
-            {
-                BinaryFormatter binaryFormatter = new BinaryFormatter ( );
-                FileStream fileStream = File.Open ( dataPath, FileMode.Open );
+            Load(BackUpSavePath);
+        }
+        
+        return dataToReturn;
 
-                data = ( Data ) binaryFormatter.Deserialize ( fileStream );
-                fileStream.Close ( );
+        void Load(string path)
+        {
+            using (StreamReader reader = new StreamReader(path + fileName + FileType))
+            {
+                BinaryFormatter formatter = new BinaryFormatter();
+                string dataToLoad = reader.ReadToEnd();
+                MemoryStream memoryStream = new MemoryStream(Convert.FromBase64String(dataToLoad));
+                try
+                {
+                    dataToReturn = (T)formatter.Deserialize(memoryStream);
+                }
+                catch
+                {
+                    backUpInNeed = true;
+                    dataToReturn = default;
+                }
             }
         }
-        catch ( Exception e )
-        {
-            PlatformSafeMessage ( "Failed to Load: " + e.Message );
-        }
-
-        return data;
     }
 
-    private static void PlatformSafeMessage ( string message )
+    public static bool SaveExists(string fileName)
     {
-        if ( Application.platform == RuntimePlatform.WebGLPlayer )
-        {
-            WindowAlert ( message );
-        }
-        else
-        {
-            Debug.Log ( message );
-        }
+        return (File.Exists(SavePath + fileName + FileType)) ||
+               (File.Exists(BackUpSavePath + fileName + FileType));
     }
-}*/
+}
