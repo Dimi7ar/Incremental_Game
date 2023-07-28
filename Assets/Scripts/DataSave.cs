@@ -8,8 +8,8 @@ using UnityEngine;
 public class DataSave : MonoBehaviour
 {
     private const string FileType = ".txt";
-    private static string SavePath => Application.persistentDataPath + "/Saves/";
-    private static string BackUpSavePath => Application.persistentDataPath + "/BackUps/";
+    private static string SavePath => "idbfs/incremental_game" + "/saves/";
+    private static string BackUpSavePath => "idbfs/incremental_game" + "/backups/";
 
     private static int SaveCount;
     public static void SaveData<T>(T data, string fileName)
