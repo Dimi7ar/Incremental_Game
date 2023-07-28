@@ -1,18 +1,22 @@
 ﻿using System;
 using System.IO;
+using System.Linq.Expressions;
 using System.Runtime.InteropServices;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 
 public class DataSave : MonoBehaviour
 {
-    private const string FileType = ".json";
+    private const string FileType = ".txt";
     private static string SavePath => Application.persistentDataPath + "/Saves/";
     private static string BackUpSavePath => Application.persistentDataPath + "/BackUps/";
 
     private static int SaveCount;
     public static void SaveData<T>(T data, string fileName)
     {
+        Directory.CreateDirectory(SavePath);
+        Directory.CreateDirectory(BackUpSavePath);
+        
         if (SaveCount % 5 == 0)
             Save(BackUpSavePath);
         Save(SavePath);
@@ -20,9 +24,14 @@ public class DataSave : MonoBehaviour
 
         void Save(string path)
         {
-            string dataData = JsonUtility.ToJson(data);
-            string filePath = path + fileName + FileType;
-            System.IO.File.WriteAllText(filePath, dataData);
+            using (StreamWriter writer = new StreamWriter(path + fileName + FileType))
+            {
+                BinaryFormatter formatter = new BinaryFormatter();
+                MemoryStream memoryStream = new MemoryStream();
+                formatter.Serialize(memoryStream, data);
+                string dataToSave = Convert.ToBase64String(memoryStream.ToArray());
+                writer.WriteLine(dataToSave);
+            }
         }
     }
 
@@ -44,9 +53,21 @@ public class DataSave : MonoBehaviour
 
         void Load(string path)
         {
-            string filePath = path + fileName + FileType;
-            string dataData = System.IO.File.ReadAllText(filePath);
-            dataToReturn = JsonUtility.FromJson<T>(dataData);
+            using (StreamReader reader = new StreamReader(path + fileName + FileType))
+            {
+                BinaryFormatter formatter = new BinaryFormatter();
+                string dataToLoad = reader.ReadToEnd();
+                MemoryStream memoryStream = new MemoryStream(Convert.FromBase64String(dataToLoad));
+                try
+                {
+                    dataToReturn = (T)formatter.Deserialize(memoryStream);
+                }
+                catch
+                {
+                    backUpInNeed = true;
+                    dataToReturn = default;
+                }
+            }
         }
     }
 
