@@ -1,11 +1,14 @@
 ﻿using System;
 using System.IO;
+using System.Runtime.InteropServices;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 
 public class DataSave : MonoBehaviour
 {
-    //Credits to Considera Core on youtube, helped me a lot
+    [DllImport("__Internal")]
+    private static extern void SyncFiles();
+    
     private const string FileType = ".txt";
     private static string SavePath => Application.persistentDataPath + "/Saves/";
     private static string BackUpSavePath => Application.persistentDataPath + "/BackUps/";
@@ -30,6 +33,7 @@ public class DataSave : MonoBehaviour
                 formatter.Serialize(memoryStream, data);
                 string dataToSave = Convert.ToBase64String(memoryStream.ToArray());
                 writer.WriteLine(dataToSave);
+                SyncFiles();
             }
         }
     }
