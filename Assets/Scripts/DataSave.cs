@@ -6,9 +6,6 @@ using UnityEngine;
 
 public class DataSave : MonoBehaviour
 {
-    [DllImport("__Internal")]
-    private static extern void SyncFiles();
-    
     private const string FileType = ".json";
     private static string SavePath => Application.persistentDataPath + "/Saves/";
     private static string BackUpSavePath => Application.persistentDataPath + "/BackUps/";
