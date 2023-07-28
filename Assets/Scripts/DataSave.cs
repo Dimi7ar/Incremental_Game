@@ -9,16 +9,13 @@ public class DataSave : MonoBehaviour
     [DllImport("__Internal")]
     private static extern void SyncFiles();
     
-    private const string FileType = ".txt";
+    private const string FileType = ".json";
     private static string SavePath => Application.persistentDataPath + "/Saves/";
     private static string BackUpSavePath => Application.persistentDataPath + "/BackUps/";
 
     private static int SaveCount;
     public static void SaveData<T>(T data, string fileName)
     {
-        Directory.CreateDirectory(SavePath);
-        Directory.CreateDirectory(BackUpSavePath);
-        
         if (SaveCount % 5 == 0)
             Save(BackUpSavePath);
         Save(SavePath);
@@ -26,15 +23,9 @@ public class DataSave : MonoBehaviour
 
         void Save(string path)
         {
-            using (StreamWriter writer = new StreamWriter(path + fileName + FileType))
-            {
-                BinaryFormatter formatter = new BinaryFormatter();
-                MemoryStream memoryStream = new MemoryStream();
-                formatter.Serialize(memoryStream, data);
-                string dataToSave = Convert.ToBase64String(memoryStream.ToArray());
-                writer.WriteLine(dataToSave);
-                SyncFiles();
-            }
+            string dataData = JsonUtility.ToJson(data);
+            string filePath = path + fileName + FileType;
+            System.IO.File.WriteAllText(filePath, dataData);
         }
     }
 
@@ -56,21 +47,9 @@ public class DataSave : MonoBehaviour
 
         void Load(string path)
         {
-            using (StreamReader reader = new StreamReader(path + fileName + FileType))
-            {
-                BinaryFormatter formatter = new BinaryFormatter();
-                string dataToLoad = reader.ReadToEnd();
-                MemoryStream memoryStream = new MemoryStream(Convert.FromBase64String(dataToLoad));
-                try
-                {
-                    dataToReturn = (T)formatter.Deserialize(memoryStream);
-                }
-                catch
-                {
-                    backUpInNeed = true;
-                    dataToReturn = default;
-                }
-            }
+            string filePath = path + fileName + FileType;
+            string dataData = System.IO.File.ReadAllText(filePath);
+            dataToReturn = JsonUtility.FromJson<T>(dataData);
         }
     }
 
