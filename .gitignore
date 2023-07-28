@@ -1,0 +1,13 @@
+
+*.meta
+Assets/TextMesh Pro/Examples & Extras/Textures/Text Overflow - Linked Text Image 1.png
+*/TextMesh Pro/*
+*/Artifacts/*
+*/Bee/*
+*Library/*
+*Temp/*
+*ProjectSettings/*
+*UserSettings/*
+*Packages/*
+*obj/*
+*Logs/*
