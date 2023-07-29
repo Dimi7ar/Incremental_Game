@@ -51,10 +51,10 @@ public class GameController : MonoBehaviour
     
     
     private float period = 0.0f;
-    // private float dataSavePeriod = 0.0f;
     private float SaveTime = 0.0f;
-    private const string fileName = "PlayerData";
+    //private string fileName = "PlayerData";
     public TMP_Text lastSave;
+    private string fileName = "PlayerData";
 
     public GameController()
     {
@@ -123,20 +123,23 @@ public class GameController : MonoBehaviour
 
     public void CreatureReset()
     {
-        if (creatureScreenCG.alpha == 0)
+        if (cardInventory.Count < 9)
         {
-            ResetContent();
-            fadeIntoCreatureScreen = true;
-            choice.Align();
-        }
-        else
-        {
-            fadeIntoMainGame = true;
-            cardEffect.SetText(CardText());
-            creature.fillNumber = 0;
-            creature.button.SetActive(false);
-            creature.gameObject.SetActive(false);
-            creature.count++;
+            if (creatureScreenCG.alpha == 0)
+            {
+                ResetContent();
+                fadeIntoCreatureScreen = true;
+                choice.Align();
+            }
+            else
+            {
+                fadeIntoMainGame = true;
+                cardEffect.SetText(CardText());
+                creature.fillNumber = 0;
+                creature.button.SetActive(false);
+                creature.gameObject.SetActive(false);
+                creature.count++;
+            }
         }
     }
     private void GameLoop()

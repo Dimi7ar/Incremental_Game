@@ -5,58 +5,39 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 
-public class DataSave : MonoBehaviour
+public class DataSave
 {
     private const string FileType = ".txt";
-    private static string SavePath => "idbfs/incremental_game" + "/saves/";
-    private static string BackUpSavePath => "idbfs/incremental_game" + "/backups/";
 
     private static int SaveCount;
     public static void SaveData<T>(T data, string fileName)
     {
-        Directory.CreateDirectory(SavePath);
-        Directory.CreateDirectory(BackUpSavePath);
-        
-        if (SaveCount % 5 == 0)
-            Save(BackUpSavePath);
-        Save(SavePath);
-        SaveCount++;
+        Save();
 
-        void Save(string path)
+        void Save()
         {
-            using (StreamWriter writer = new StreamWriter(path + fileName + FileType))
-            {
-                BinaryFormatter formatter = new BinaryFormatter();
-                MemoryStream memoryStream = new MemoryStream();
-                formatter.Serialize(memoryStream, data);
-                string dataToSave = Convert.ToBase64String(memoryStream.ToArray());
-                writer.WriteLine(dataToSave);
-            }
+            BinaryFormatter formatter = new BinaryFormatter();
+            MemoryStream memoryStream = new MemoryStream();
+            formatter.Serialize(memoryStream, data);
+            string dataToSave = Convert.ToBase64String(memoryStream.ToArray());
+            PlayerPrefs.SetString(fileName + FileType, dataToSave);
         }
     }
 
     public static T LoadData<T>(string fileName)
     {
-        Directory.CreateDirectory(SavePath);
-        Directory.CreateDirectory(BackUpSavePath);
+        T dataToReturn = default;
 
-        bool backUpInNeed = false;
-        T dataToReturn;
-        
-        Load(SavePath);
-        if (backUpInNeed)
-        {
-            Load(BackUpSavePath);
-        }
-        
+        Load();
+
         return dataToReturn;
 
-        void Load(string path)
+        void Load()
         {
-            using (StreamReader reader = new StreamReader(path + fileName + FileType))
+            string dataToLoad = PlayerPrefs.GetString(fileName + FileType, "");
+            if (!string.IsNullOrEmpty(dataToLoad))
             {
                 BinaryFormatter formatter = new BinaryFormatter();
-                string dataToLoad = reader.ReadToEnd();
                 MemoryStream memoryStream = new MemoryStream(Convert.FromBase64String(dataToLoad));
                 try
                 {
@@ -64,16 +45,104 @@ public class DataSave : MonoBehaviour
                 }
                 catch
                 {
-                    backUpInNeed = true;
                     dataToReturn = default;
                 }
+            }
+            else
+            {
+                dataToReturn = default;
             }
         }
     }
 
     public static bool SaveExists(string fileName)
     {
-        return (File.Exists(SavePath + fileName + FileType)) ||
-               (File.Exists(BackUpSavePath + fileName + FileType));
+        return PlayerPrefs.HasKey(fileName + FileType);
     }
 }
+/*using System;
+using System.IO;
+using System.Runtime.InteropServices;
+using System.Runtime.Serialization.Formatters.Binary;
+using UnityEngine;
+
+public class DataSave
+{
+    [DllImport ( "__Internal" )]
+    private static extern void SyncFiles ( );
+
+    [DllImport ( "__Internal" )]
+    private static extern void WindowAlert ( string message );
+
+    public static void Save ( Data data )
+    {
+        string dataPath = string.Format ( "/idbfs/incremental_game_player_data/data.dat" );
+        BinaryFormatter binaryFormatter = new BinaryFormatter ( );
+        FileStream fileStream;
+
+        try
+        {
+            if ( File.Exists ( dataPath ) )
+            {
+                File.WriteAllText ( dataPath, string.Empty );
+                fileStream = File.Open ( dataPath, FileMode.Open );
+            }
+            else
+            {
+                fileStream = File.Create ( dataPath );
+            }
+
+            binaryFormatter.Serialize ( fileStream, data );
+            fileStream.Close ( );
+
+            if ( Application.platform == RuntimePlatform.WebGLPlayer )
+            {
+                SyncFiles ( );
+            }
+        }
+        catch ( Exception e )
+        {
+            PlatformSafeMessage ( "Failed to Save: " + e.Message );
+        }
+    }
+
+    public static Data Load (Data data )
+    {
+        string dataPath = string.Format ( "/idbfs/incremental_game_player_data/data.dat" );
+
+        try
+        {
+            if ( File.Exists ( dataPath ) )
+            {
+                BinaryFormatter binaryFormatter = new BinaryFormatter ( );
+                FileStream fileStream = File.Open ( dataPath, FileMode.Open );
+
+                data = ( Data ) binaryFormatter.Deserialize ( fileStream );
+                fileStream.Close ( );
+            }
+        }
+        catch ( Exception e )
+        {
+            PlatformSafeMessage ( "Failed to Load: " + e.Message );
+        }
+
+        return data;
+    }
+
+    private static void PlatformSafeMessage ( string message )
+    {
+        if ( Application.platform == RuntimePlatform.WebGLPlayer )
+        {
+            WindowAlert ( message );
+        }
+        else
+        {
+            Debug.Log ( message );
+        }
+    }
+    
+    public static bool SaveExists()
+    {
+        return File.Exists("/idbfs/incremental_game_player_data/data.dat");
+    }
+}*/
