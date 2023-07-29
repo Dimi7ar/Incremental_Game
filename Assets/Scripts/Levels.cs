@@ -30,5 +30,9 @@ public class Levels : MonoBehaviour
             levelRequierment += levelRequierment * 0.5 * GameController.expRequirementDecrease;
         GameController.data.level++;
         GameController.data.exp = 0;
+        if (GameController.data.maxLevel < GameController.data.level)
+        {
+            GameController.data.maxLevel = GameController.data.level;
+        }
     }
 }

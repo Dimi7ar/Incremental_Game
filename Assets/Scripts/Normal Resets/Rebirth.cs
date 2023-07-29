@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -25,6 +26,18 @@ public class Rebirth : MonoBehaviour
     {
         
     }
+
+    public void Start()
+    {
+        rebirth = GameController.data.rebirth;
+        rebirthGain = GameController.data.rebirth_Gain;
+        multiplierMultiplier = GameController.data.rebirth_Multiplier_Multiplier;
+        softcap = GameController.data.rebirth_Softcap;
+        hardcap = GameController.data.rebirth_Hardcap;
+        maxLevel = GameController.data.rebirth_Max_Level;
+        rebirthDescription.SetText($"Your {GameController.ConvertNumber(rebirth, 0)} rebirth points increase multiplier gain by x{GameController.ConvertNumber(multiplierMultiplier, 2)}");
+    }
+
     public void Update()
     {
             if (GameController.data.level >= 50)

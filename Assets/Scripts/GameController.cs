@@ -9,7 +9,7 @@ using Random = Unity.Mathematics.Random;
 
 public class GameController : MonoBehaviour
 {
-    public Data data;
+    public Data data = new Data();
     public Levels levels;
     public Multiplier multiplier;
     public Rebirth rebirth;
@@ -32,7 +32,7 @@ public class GameController : MonoBehaviour
         new Card(9, "Decrease level requirement by 25%")
     };
 
-    public List<Card> cardInventory = new List<Card>();
+    public List<int> cardInventory = new List<int>();
     public ChooseCard choice;
     public TMP_Text cardEffect;
 
@@ -52,7 +52,6 @@ public class GameController : MonoBehaviour
     
     private float period = 0.0f;
     private float SaveTime = 0.0f;
-    //private string fileName = "PlayerData";
     public TMP_Text lastSave;
     private string fileName = "PlayerData";
 
@@ -64,7 +63,7 @@ public class GameController : MonoBehaviour
     public void Start()
     {
         data = DataSave.SaveExists(fileName) ? DataSave.LoadData<Data>(fileName) : new Data();
-        levels.levelRequierment = data.levelRequirement;
+        LoadController();
     }
     public void Update()
     {
@@ -79,7 +78,7 @@ public class GameController : MonoBehaviour
 
         SaveTime += Time.deltaTime;
         lastSave.SetText($"Last save: {SaveTime:F0}s ago");
-        if (SaveTime >= 10)
+        if (SaveTime >= 15)
         {
             DataSave.SaveData(data, fileName);
             SaveTime = 0;
@@ -130,6 +129,7 @@ public class GameController : MonoBehaviour
                 ResetContent();
                 fadeIntoCreatureScreen = true;
                 choice.Align();
+                data.maxLevel = 0;
             }
             else
             {
@@ -139,7 +139,18 @@ public class GameController : MonoBehaviour
                 creature.button.SetActive(false);
                 creature.gameObject.SetActive(false);
                 creature.count++;
+                data.creature_Count++;
             }
+        }
+        else if (cardInventory.Count == 9)
+        {
+            fadeIntoMainGame = true;
+            cardEffect.SetText(CardText());
+            creature.fillNumber = 0;
+            creature.button.SetActive(false);
+            creature.gameObject.SetActive(false);
+            creature.count++;
+            data.creature_Count++;
         }
     }
     private void GameLoop()
@@ -165,15 +176,15 @@ public class GameController : MonoBehaviour
 
     private void CheckAvailability()
     {
-        if (data.level >= 40 && rebirth.gameObject.activeSelf == false)
+        if (data.maxLevel >= 40 && rebirth.gameObject.activeSelf == false)
         {
             rebirth.gameObject.SetActive(true);
         }
-        if (data.level >= 90 && prestige.gameObject.activeSelf == false)
+        if (data.maxLevel >= 90 && prestige.gameObject.activeSelf == false)
         {
             prestige.gameObject.SetActive(true);
         }
-        if (data.level >= 100 && creature.gameObject.activeSelf == false)
+        if (data.maxLevel >= 100 && creature.gameObject.activeSelf == false)
         {
             creature.gameObject.SetActive(true);
         }
@@ -277,7 +288,7 @@ public class GameController : MonoBehaviour
         {
             sb.Append($"TPS / {tickspeedMultiplier}, ");
         }
-        if (expRequirementDecrease > 1)
+        if (expRequirementDecrease < 1)
         {
             sb.Append($"LevelReq * {expRequirementDecrease}, ");
         }
@@ -285,5 +296,25 @@ public class GameController : MonoBehaviour
         return sb.ToString().TrimEnd();
     }
 
+    private void LoadController()
+    {
+        levels.levelRequierment = data.levelRequirement;
+        cardInventory = data.card_Inventory;
+        expMultiplier = data.card_Exp_Multiplier;
+        multiplierMultiplier = data.card_Multiplier_Multiplier;
+        rebirthMultiplier = data.card_Rebirth_Multiplier;
+        prestigeMultiplier = data.card_Prestige_Multiplier;
+        tickspeedMultiplier = data.card_Tickspeed_Multiplier;
+        expRequirementDecrease = data.card_Exp_Requirement_Decrease;
+        if (data.card_Inventory.Count > 0)
+        {
+            cardEffect.SetText(CardText());
+        }
+    }
+
+    public void TestButtonClick()
+    {
+        data.level += 100;
+    }
    
 }

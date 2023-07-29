@@ -10,6 +10,7 @@ public class Data
     public double level = 0;
     public double expPerTick = 1;
     public double levelRequirement = 2;
+    public double maxLevel = 0;
     
     public double multiplier = 0;
     public double multiplier_Exp_Multiplier = 1;
@@ -35,8 +36,8 @@ public class Data
     public double prestige_Hardcap = 0;
 
 
-    public List<Card> cards = new List<Card>();
-    public List<Card> card_Inventory = new List<Card>();
+    public List<int> card_Inventory = new List<int>();
+    public int creature_Count = 1;
     
     public double card_Exp_Multiplier = 1;
     public double card_Multiplier_Multiplier = 1;
@@ -46,6 +47,6 @@ public class Data
     public double card_Exp_Requirement_Decrease = 1;
     public Data()
     {
-        
+        creature_Count = 1;
     }
 }

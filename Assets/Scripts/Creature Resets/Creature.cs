@@ -13,14 +13,25 @@ public class Creature : MonoBehaviour
     public GameObject button;
     public int count = 1;
 
+    public void Start()
+    {
+        
+    }
+
     public void Update()
     {
+        count = GameController.data.creature_Count;
         if (fillNumber < 1)
         {
             fillNumber = (float)((GameController.data.level - 100) / (100 * count));
             fill.fillAmount = fillNumber;
         }
-        if (fillNumber >= 1)
+
+        if (GameController.data.card_Inventory.Count == 9)
+        {
+            button.SetActive(false);
+        }
+        else if ((GameController.data.level - 100) / (100 * count) >= 1)
         {
             button.SetActive(true);
         }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -26,6 +27,19 @@ public class Prestige : MonoBehaviour
     {
         expMultiplier = 1;
     }
+
+    public void Start()
+    {
+        prestige = GameController.data.prestige;
+        prestigeGain = GameController.data.prestige_Gain;
+        expMultiplier = GameController.data.prestige_Exp_Multiplier;
+        rebirthMultiplier = GameController.data.prestige_Rebirth_Multiplier;
+        softcap = GameController.data.prestige_Softcap;
+        hardcap = GameController.data.prestige_Hardcap;
+        maxLevel = GameController.data.prestige_Max_Level;
+        prestigeDescription.SetText($"Your {GameController.ConvertNumber(prestige, 0)} prestige points increase rebirth gain by x{GameController.ConvertNumber(rebirthMultiplier, 2)} and exp gain by x{GameController.ConvertNumber(expMultiplier, 2)}");
+    }
+
     public void Update()
     {
             if (GameController.data.level >= 100)

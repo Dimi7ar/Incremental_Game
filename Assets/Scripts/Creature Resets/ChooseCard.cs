@@ -13,7 +13,6 @@ public class ChooseCard : MonoBehaviour
     public GameObject frame1;
     public GameObject frame2;
     public GameObject background;
-    private int totalCard = 0;
     public Card card1;
     public Card card2;
     public Card card3;
@@ -49,11 +48,13 @@ public class ChooseCard : MonoBehaviour
                     card3Object.GetComponent<RectTransform>().anchoredPosition = new Vector2(540, anchor);
                 period = 0;
             }
+
             if (anchor == -275)
             {
                 moveCard = false;
                 anchor = -700;
             }
+
             period += Time.deltaTime;
         }
 
@@ -77,6 +78,7 @@ public class ChooseCard : MonoBehaviour
                 card2Object.GetComponent<RectTransform>().localScale = new Vector2(0, 0);
                 hideCard = false;
             }
+
             GameController.CreatureReset();
         }
 
@@ -92,156 +94,150 @@ public class ChooseCard : MonoBehaviour
                 frame1.SetActive(true);
                 frame2.SetActive(false);
             }
+
             periodAnimation = 0;
         }
+
         periodAnimation += Time.deltaTime;
 
         if (background.GetComponent<RectTransform>().anchoredPosition.x != 480)
         {
-            background.GetComponent<RectTransform>().anchoredPosition = new Vector2(background.GetComponent<RectTransform>().anchoredPosition.x + 0.2f, 0);
+            background.GetComponent<RectTransform>().anchoredPosition =
+                new Vector2(background.GetComponent<RectTransform>().anchoredPosition.x + 0.2f, 0);
         }
         else
         {
             background.GetComponent<RectTransform>().anchoredPosition = new Vector2(-480, 0);
         }
     }
+
     public void Align()
     {
-        if (totalCard == 0)
-        {
-            totalCard = GameController.cards.Count;
-        }
-        
         bool flag = true;
         bool card1Done = false;
         bool card2Done = false;
         bool card3Done = false;
         while (flag)
         {
-            if (GameController.cards.Count == 0)
-            {
-                flag = false;
-                GameController.CreatureReset();
-            }
-            int cardIndex = (int)Random.Range(0, GameController.cards.Count);
+            int cardIndex = (int) Random.Range(0, GameController.cards.Count);
             int cardId = GameController.cards[cardIndex].id;
-            
-            if (GameController.cardInventory.Count <= totalCard - 3)
-            {
-                if (GameController.cards.Exists(x => x.id == cardId))
-                {
-                    if (card1Done != true)
-                    {
-                        card1 = GameController.cards.Find(x => x.id == cardId);
-                        card1Object.card = card1;
-                        card1Object.descriptionText.SetText(card1Object.card.description);
-                        card1Done = true;
-                    }
-                    else if (card2Done != true && cardId != card1.id)
-                    {
-                        card2 = GameController.cards.Find(x => x.id == cardId);
-                        card2Object.card = card2;
-                        card2Object.descriptionText.SetText(card2Object.card.description);
-                        card2Done = true;
-                    }
-                    else if (card3Done != true && cardId != card1.id && cardId != card2.id)
-                    {
-                        card3 = GameController.cards.Find(x => x.id == cardId);
-                        card3Object.card = card3;
-                        card3Object.descriptionText.SetText(card3Object.card.description);
-                        card3Done = true;
-                    }
-                    else if (card1Done == true && card2Done == true && card3Done == true)
-                    {
-                        flag = false;
-                    }
-                }
-            }
-            else if (GameController.cardInventory.Count <= totalCard - 2)
-            {
-                if (GameController.cards.Exists(x => x.id == cardId))
-                {
-                    if (card1Done != true)
-                    {
-                        card1 = GameController.cards.Find(x => x.id == cardId);
-                        card1Object.card = card1;
-                        card1Object.descriptionText.SetText(card1Object.card.description);
-                        card1Done = true;
-                    }
-                    else if (card2Done != true && cardId != card1.id)
-                    {
-                        card2 = GameController.cards.Find(x => x.id == cardId);
-                        card2Object.card = card2;
-                        card2Object.descriptionText.SetText(card2Object.card.description);
-                        card2Done = true;
-                    }
-                    else if (card1Done == true && card2Done == true)
-                    {
-                        flag = false;
-                    }
 
-                    card3Object.gameObject.SetActive(false);
-                }
-            }
-            else if (GameController.cardInventory.Count <= totalCard - 1)
+            if (!GameController.cardInventory.Contains(cardId))
             {
-                if (GameController.cards.Exists(x => x.id == cardId))
+                if (GameController.cardInventory.Count <= 6)
                 {
-                    if (card1Done != true)
+                    if (GameController.cards.Exists(x => x.id == cardId))
                     {
-                        card1 = GameController.cards.Find(x => x.id == cardId);
-                        card1Object.card = card1;
-                        card1Object.descriptionText.SetText(card1Object.card.description);
-                        card1Done = true;
+                        if (card1Done != true)
+                        {
+                            card1 = GameController.cards.Find(x => x.id == cardId);
+                            card1Object.card = card1;
+                            card1Object.descriptionText.SetText(card1Object.card.description);
+                            card1Done = true;
+                        }
+                        else if (card2Done != true && cardId != card1.id)
+                        {
+                            card2 = GameController.cards.Find(x => x.id == cardId);
+                            card2Object.card = card2;
+                            card2Object.descriptionText.SetText(card2Object.card.description);
+                            card2Done = true;
+                        }
+                        else if (card3Done != true && cardId != card1.id && cardId != card2.id)
+                        {
+                            card3 = GameController.cards.Find(x => x.id == cardId);
+                            card3Object.card = card3;
+                            card3Object.descriptionText.SetText(card3Object.card.description);
+                            card3Done = true;
+                        }
+                        else if (card1Done == true && card2Done == true && card3Done == true)
+                        {
+                            flag = false;
+                        }
                     }
-                    else
-                    {
-                        flag = false;
-                    }
-
-                    card2Object.gameObject.SetActive(false);
-                    card3Object.gameObject.SetActive(false);
                 }
-            }
-            else
-            {
-                flag = false;
+                else if (GameController.cardInventory.Count <= 7)
+                {
+                    if (GameController.cards.Exists(x => x.id == cardId))
+                    {
+                        if (card1Done != true)
+                        {
+                            card1 = GameController.cards.Find(x => x.id == cardId);
+                            card1Object.card = card1;
+                            card1Object.descriptionText.SetText(card1Object.card.description);
+                            card1Done = true;
+                        }
+                        else if (card2Done != true && cardId != card1.id)
+                        {
+                            card2 = GameController.cards.Find(x => x.id == cardId);
+                            card2Object.card = card2;
+                            card2Object.descriptionText.SetText(card2Object.card.description);
+                            card2Done = true;
+                        }
+                        else if (card1Done == true && card2Done == true)
+                        {
+                            flag = false;
+                        }
+
+                        card3Object.gameObject.SetActive(false);
+                    }
+                }
+                else if (GameController.cardInventory.Count <= 8)
+                {
+                    if (GameController.cards.Exists(x => x.id == cardId))
+                    {
+                        if (card1Done != true)
+                        {
+                            card1 = GameController.cards.Find(x => x.id == cardId);
+                            card1Object.card = card1;
+                            card1Object.descriptionText.SetText(card1Object.card.description);
+                            card1Done = true;
+                        }
+                        else
+                        {
+                            flag = false;
+                        }
+
+                        card2Object.gameObject.SetActive(false);
+                        card3Object.gameObject.SetActive(false);
+                    }
+                }
+                else
+                {
+                    flag = false;
+                }
             }
         }
+
         moveCard = true;
     }
 
     public void Choose1()
     {
-        GameController.cards.RemoveAt(GameController.cards.FindIndex(x => x.id == card1.id));
-        GameController.cardInventory.Add(card1);
+        GameController.cardInventory.Add(card1.id);
         chosenCard = 1;
         card1Button.interactable = false;
         CardEffect(card1Object.card.id);
         hideCard = true;
-        GameController.data.cards = GameController.cards;
         GameController.data.card_Inventory = GameController.cardInventory;
     }
+
     public void Choose2()
     {
-        GameController.cards.RemoveAt(GameController.cards.FindIndex(x => x.id == card2.id));
-        GameController.cardInventory.Add(card2);
+        GameController.cardInventory.Add(card2.id);
         chosenCard = 2;
         card2Button.interactable = false;
         CardEffect(card2Object.card.id);
         hideCard = true;
-        GameController.data.cards = GameController.cards;
         GameController.data.card_Inventory = GameController.cardInventory;
     }
+
     public void Choose3()
     {
-        GameController.cards.RemoveAt(GameController.cards.FindIndex(x => x.id == card3.id));
-        GameController.cardInventory.Add(card3);
+        GameController.cardInventory.Add(card3.id);
         chosenCard = 3;
         card3Button.interactable = false;
         CardEffect(card3Object.card.id);
         hideCard = true;
-        GameController.data.cards = GameController.cards;
         GameController.data.card_Inventory = GameController.cardInventory;
     }
 
@@ -299,7 +295,7 @@ public class ChooseCard : MonoBehaviour
         card1Object.gameObject.SetActive(true);
         card2Object.gameObject.SetActive(true);
         card3Object.gameObject.SetActive(true);
-        
+
         card1Object.GetComponent<RectTransform>().localScale = new Vector2(1, 1);
         card2Object.GetComponent<RectTransform>().localScale = new Vector2(1, 1);
         card3Object.GetComponent<RectTransform>().localScale = new Vector2(1, 1);
@@ -307,7 +303,7 @@ public class ChooseCard : MonoBehaviour
         card1Button.interactable = true;
         card2Button.interactable = true;
         card3Button.interactable = true;
-        
+
         card1Object.GetComponent<RectTransform>().anchoredPosition = new Vector2(-540, anchor);
         card2Object.GetComponent<RectTransform>().anchoredPosition = new Vector2(0, anchor);
         card3Object.GetComponent<RectTransform>().anchoredPosition = new Vector2(540, anchor);
