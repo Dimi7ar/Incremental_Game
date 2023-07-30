@@ -122,7 +122,7 @@ public class GameController : MonoBehaviour
 
     public void CreatureReset()
     {
-        if (cardInventory.Count < 9)
+        if (choice.cardsAvailable > 0)
         {
             if (creatureScreenCG.alpha == 0)
             {
@@ -142,7 +142,7 @@ public class GameController : MonoBehaviour
                 data.creature_Count++;
             }
         }
-        else if (cardInventory.Count == 9)
+        else if (choice.cardsAvailable == 0)
         {
             fadeIntoMainGame = true;
             cardEffect.SetText(CardText());

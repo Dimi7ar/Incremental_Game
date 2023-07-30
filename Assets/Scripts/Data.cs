@@ -38,6 +38,7 @@ public class Data
 
     public List<int> card_Inventory = new List<int>();
     public int creature_Count = 1;
+    public int cards_Available = 9;
     
     public double card_Exp_Multiplier = 1;
     public double card_Multiplier_Multiplier = 1;

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,7 @@ public class ChooseCard : MonoBehaviour
     public Card card1;
     public Card card2;
     public Card card3;
+    public int cardsAvailable;
 
     private float period = 0.0f;
     private float periodAnimation = 0.0f;
@@ -32,6 +34,10 @@ public class ChooseCard : MonoBehaviour
     public Button card2Button;
     public Button card3Button;
 
+    public void Start()
+    {
+        cardsAvailable = GameController.data.cards_Available;
+    }
 
     public void Update()
     {
@@ -124,7 +130,7 @@ public class ChooseCard : MonoBehaviour
 
             if (!GameController.cardInventory.Contains(cardId))
             {
-                if (GameController.cardInventory.Count <= 6)
+                if (cardsAvailable >= 3)
                 {
                     if (GameController.cards.Exists(x => x.id == cardId))
                     {
@@ -155,7 +161,7 @@ public class ChooseCard : MonoBehaviour
                         }
                     }
                 }
-                else if (GameController.cardInventory.Count <= 7)
+                else if (cardsAvailable >= 2)
                 {
                     if (GameController.cards.Exists(x => x.id == cardId))
                     {
@@ -181,7 +187,7 @@ public class ChooseCard : MonoBehaviour
                         card3Object.gameObject.SetActive(false);
                     }
                 }
-                else if (GameController.cardInventory.Count <= 8)
+                else if (cardsAvailable >= 1)
                 {
                     if (GameController.cards.Exists(x => x.id == cardId))
                     {
@@ -215,6 +221,8 @@ public class ChooseCard : MonoBehaviour
     {
         GameController.cardInventory.Add(card1.id);
         chosenCard = 1;
+        cardsAvailable--;
+        GameController.data.cards_Available = cardsAvailable;
         card1Button.interactable = false;
         CardEffect(card1Object.card.id);
         hideCard = true;
@@ -225,6 +233,8 @@ public class ChooseCard : MonoBehaviour
     {
         GameController.cardInventory.Add(card2.id);
         chosenCard = 2;
+        cardsAvailable--;
+        GameController.data.cards_Available = cardsAvailable;
         card2Button.interactable = false;
         CardEffect(card2Object.card.id);
         hideCard = true;
@@ -235,6 +245,8 @@ public class ChooseCard : MonoBehaviour
     {
         GameController.cardInventory.Add(card3.id);
         chosenCard = 3;
+        cardsAvailable--;
+        GameController.data.cards_Available = cardsAvailable;
         card3Button.interactable = false;
         CardEffect(card3Object.card.id);
         hideCard = true;
