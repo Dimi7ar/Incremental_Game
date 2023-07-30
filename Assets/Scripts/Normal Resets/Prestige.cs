@@ -20,8 +20,8 @@ public class Prestige : MonoBehaviour
     public double maxLevel;
     
     private double softcap = 1.5;
-    private double cap = 25;
-    private double hardcap = 0;
+    private double cap = 10;
+    private double hardcap = 10;
 
     public Prestige()
     {
@@ -47,22 +47,15 @@ public class Prestige : MonoBehaviour
                 button.interactable = true;
                 if (GameController.data.level > maxLevel)
                 {
-                    if (GameController.data.level <= 105)
-                    {
-                        hardcap += cap;
-                        softcap -= softcap / hardcap;
-                    }
-                    else if (GameController.data.level <= 100000)
-                    {
-                        cap = 40;
-                        hardcap += cap;
-                        softcap -= softcap / hardcap;
-                    }
+                    if (GameController.data.level >= 1000 + 100)
+                        softcap = 1.1;
                     else
-                    {   
-                        cap = 100;
+                    {
+                        cap = math.pow(10, (GameController.data.level - 100).ToString().Length);
                         hardcap += cap;
                         softcap -= softcap / hardcap;
+                        GameController.data.multiplier_Softcap = softcap;
+                        GameController.data.multiplier_Hardcap = hardcap;
                     }
                     prestigeGain *= softcap;
                     GameController.data.prestige_Gain = prestigeGain;
@@ -110,8 +103,8 @@ public class Prestige : MonoBehaviour
         GameController.levels.levelRequierment = 2;
         softcap = 1.5;
         maxLevel = 0;
-        cap = 25;
-        hardcap = 0;
+        cap = 10;
+        hardcap = 10;
     }
 
     public void Reset()

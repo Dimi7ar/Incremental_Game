@@ -19,9 +19,9 @@ public class Multiplier : MonoBehaviour
     public TMP_Text multiplierDescription;
     public TMP_Text multiplierButtonText;
 
-    private double softcap = 1.5;
-    private double cap = 25;
-    private double hardcap = 0;
+    public double softcap = 1.5;
+    public double cap = 10;
+    public double hardcap = 10;
 
     public Multiplier()
     {
@@ -46,25 +46,16 @@ public class Multiplier : MonoBehaviour
             button.interactable = true;
             if (GameController.data.level > maxLevel)
             {
-                if (GameController.data.level <= 15)
-                {
-                    hardcap += cap;
-                    softcap -= softcap / hardcap;
-                }
-                else if (GameController.data.level <= 10000)
-                {
-                    cap = 40;
-                    hardcap += cap;
-                    softcap -= softcap / hardcap;
-                }
+                if (GameController.data.level >= 1000)
+                    softcap = 1.1;
                 else
-                {   
-                    cap = 100;
-                    hardcap += cap;
-                    softcap -= softcap / hardcap;
-                }
+                {
+                    cap = math.pow(10, GameController.data.level.ToString().Length);
+                hardcap += cap;
+                softcap -= softcap / hardcap;
                 GameController.data.multiplier_Softcap = softcap;
                 GameController.data.multiplier_Hardcap = hardcap;
+                }
                 
                 multiplierGain *= softcap;
                 GameController.data.multiplier_Gain = multiplierGain;
@@ -109,8 +100,8 @@ public class Multiplier : MonoBehaviour
         GameController.levels.levelRequierment = 2;
         softcap = 1.5;
         maxLevel = 0;
-        cap = 25;
-        hardcap = 0;
+        cap = 10;
+        hardcap = 10;
         GameController.data.multiplier_Softcap = softcap;
         GameController.data.multiplier_Max_Level = maxLevel;
         GameController.data.multiplier_Hardcap = hardcap;

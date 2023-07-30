@@ -107,6 +107,7 @@
      <Folder Include="Assets\TextMesh Pro\Examples &amp; Extras\Fonts" />
      <Folder Include="Assets\Prefabs" />
      <Folder Include="Assets\TextMesh Pro\Examples &amp; Extras\Resources" />
+     <Folder Include="Assets\WebGLTemplates" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface.shader" />
      <None Include="Assets\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
@@ -122,6 +123,7 @@
      <Folder Include="Assets\TextMesh Pro\Resources\Style Sheets" />
      <Folder Include="Assets\TextMesh Pro\Fonts" />
      <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
+     <Folder Include="Assets\WebGLTemplates\BetterMinimal" />
      <Folder Include="Assets\TextMesh Pro\Examples &amp; Extras\Prefabs" />
      <Folder Include="Assets\Sprites" />
      <Folder Include="Assets\TextMesh Pro\Examples &amp; Extras\Scenes" />

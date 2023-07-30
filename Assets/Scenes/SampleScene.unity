@@ -5772,6 +5772,9 @@ MonoBehaviour:
   button: {fileID: 461108400}
   multiplierDescription: {fileID: 209763505}
   multiplierButtonText: {fileID: 97672640}
+  softcap: 1.5
+  cap: 25
+  hardcap: 10
 --- !u!1 &5075535441714314847
 GameObject:
   m_ObjectHideFlags: 0

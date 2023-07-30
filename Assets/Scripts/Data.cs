@@ -17,14 +17,14 @@ public class Data
     public double multiplier_Gain = 1;
     public double multiplier_Max_Level = 0;
     public double multiplier_Softcap = 1.5;
-    public double multiplier_Hardcap = 0;
+    public double multiplier_Hardcap = 10;
 
     public double rebirth = 0;
     public double rebirth_Multiplier_Multiplier = 1;
     public double rebirth_Gain = 1;
     public double rebirth_Max_Level = 0;
     public double rebirth_Softcap = 1.5;
-    public double rebirth_Hardcap = 0;
+    public double rebirth_Hardcap = 10;
 
     
     public double prestige = 0;
@@ -33,7 +33,7 @@ public class Data
     public double prestige_Gain = 1;
     public double prestige_Max_Level = 0;
     public double prestige_Softcap = 1.5;
-    public double prestige_Hardcap = 0;
+    public double prestige_Hardcap = 10;
 
 
     public List<int> card_Inventory = new List<int>();
