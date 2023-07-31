@@ -36,6 +36,9 @@ public class ChooseCard : MonoBehaviour
 
     public void Start()
     {
+        if (GameController.data.cards_Available == 0)
+            GameController.data.cards_Available = 9;
+        
         cardsAvailable = GameController.data.cards_Available;
     }
 

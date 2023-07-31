@@ -123,17 +123,18 @@ public class GameController : MonoBehaviour
 
     public void CreatureReset()
     {
-        if (choice.cardsAvailable > 0)
+        Debug.Log("enter1");
+        Debug.Log(creatureScreenCG.alpha);
+        if (creatureScreenCG.alpha == 0)
         {
-            if (creatureScreenCG.alpha == 0)
-            {
                 ResetContent();
                 fadeIntoCreatureScreen = true;
                 choice.Align();
                 data.maxLevel = 0;
-            }
-            else
-            {
+        }
+        else
+        {
+            Debug.Log("enter2");
                 fadeIntoMainGame = true;
                 cardEffect.SetText(CardText());
                 creature.fillNumber = 0;
@@ -141,17 +142,6 @@ public class GameController : MonoBehaviour
                 creature.gameObject.SetActive(false);
                 creature.count++;
                 data.creature_Count++;
-            }
-        }
-        else if (choice.cardsAvailable == 0)
-        {
-            fadeIntoMainGame = true;
-            cardEffect.SetText(CardText());
-            creature.fillNumber = 0;
-            creature.button.SetActive(false);
-            creature.gameObject.SetActive(false);
-            creature.count++;
-            data.creature_Count++;
         }
     }
     private void GameLoop()
