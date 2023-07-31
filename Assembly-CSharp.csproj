@@ -46,6 +46,8 @@
      <Compile Include="Assets\Scripts\GameController.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_A.cs" />
+     <Compile Include="Assets\Scripts\Cosmos Reset\Cosmos.cs" />
+     <Compile Include="Assets\Scripts\Cosmos Reset\CosmicBonus.cs" />
      <Compile Include="Assets\Scripts\Data.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeA.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark04.cs" />
@@ -86,8 +88,7 @@
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
      <Compile Include="Assets\Scripts\Creature Resets\Creature.cs" />
      <Compile Include="Assets\Scripts\DataSave.cs" />
-     <Compile Include="Assets\Scripts\Cosmos Reset\Cosmos.cs" />
-     <Compile Include="Assets\Scripts\Cosmos Reset\CosmicBonus.cs" />
+     <Compile Include="Assets\Scripts\Cosmos Reset\CosmicBonusObject.cs" />
      <Folder Include="Assets" />
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
      <Folder Include="Assets\TextMesh Pro\Examples &amp; Extras\Sprites" />

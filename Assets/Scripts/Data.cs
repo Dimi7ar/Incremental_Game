@@ -46,6 +46,10 @@ public class Data
     public double card_Prestige_Multiplier = 1;
     public double card_Tickspeed_Multiplier = 1;
     public double card_Exp_Requirement_Decrease = 1;
+    
+    public int cosmosCount;
+    public int cosmicPower;
+    public List<int> cosmic_Bonuses_Obtained = new List<int>();
     public Data()
     {
         creature_Count = 1;
