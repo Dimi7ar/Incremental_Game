@@ -252,6 +252,7 @@ public class GameController : MonoBehaviour
 
             if (creatureScreenCG.alpha >= 1)
             {
+                creatureScreenCG.alpha = 1;
                 fadeIntoCreatureScreen = false;
             }
         }
