@@ -53,5 +53,6 @@ public class Data
     public Data()
     {
         creature_Count = 1;
+        cards_Available = 9;
     }
 }

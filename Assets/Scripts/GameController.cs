@@ -67,6 +67,8 @@ public class GameController : MonoBehaviour
     }
     public void Update()
     {
+        Fadings();
+
         if (period > (0.1 / tickspeedMultiplier))
         {
             ExpPerSecond();
@@ -74,7 +76,6 @@ public class GameController : MonoBehaviour
         }
         GameLoop();
         period += Time.deltaTime;
-        Fadings();
 
         SaveTime += Time.deltaTime;
         lastSave.SetText($"Last save: {SaveTime:F0}s ago");
@@ -232,8 +233,9 @@ public class GameController : MonoBehaviour
             }
             else
             {
-                creatureScreen.SetActive(false);
-                mainGame.SetActive(true);
+                creatureScreenCG.alpha = 0;
+                creatureScreenCG.gameObject.SetActive(false);
+                mainGameCG.gameObject.SetActive(true);
                 mainGameCG.alpha += Time.deltaTime;
             }
 
@@ -252,8 +254,9 @@ public class GameController : MonoBehaviour
             }
             else
             {
-                mainGame.SetActive(false);
-                creatureScreen.SetActive(true);
+                mainGameCG.alpha = 0;
+                mainGameCG.gameObject.SetActive(false);
+                creatureScreenCG.gameObject.SetActive(true);
                 creatureScreenCG.alpha += Time.deltaTime;
             }
 

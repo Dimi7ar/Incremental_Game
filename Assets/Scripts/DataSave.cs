@@ -60,7 +60,7 @@ public class DataSave
         return PlayerPrefs.HasKey(fileName + FileType);
     }
 }
-/*using System;
+using System;
 using System.IO;
 using System.Runtime.InteropServices;
 using System.Runtime.Serialization.Formatters.Binary;
@@ -145,4 +145,4 @@ public class DataSave
     {
         return File.Exists("/idbfs/incremental_game_player_data/data.dat");
     }
-}*/
+}

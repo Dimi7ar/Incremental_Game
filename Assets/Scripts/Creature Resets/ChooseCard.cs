@@ -17,7 +17,7 @@ public class ChooseCard : MonoBehaviour
     public Card card1;
     public Card card2;
     public Card card3;
-    public int cardsAvailable;
+    public int cardsAvailable = 9;
 
     private float period = 0.0f;
     private float periodAnimation = 0.0f;
@@ -123,6 +123,8 @@ public class ChooseCard : MonoBehaviour
         bool card1Done = false;
         bool card2Done = false;
         bool card3Done = false;
+        cardsAvailable = GameController.data.cards_Available;
+        Debug.Log(cardsAvailable);
         while (flag)
         {
             int cardIndex = (int) Random.Range(0, GameController.cards.Count);
