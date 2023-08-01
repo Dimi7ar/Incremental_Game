@@ -53,7 +53,6 @@ public class GameController : MonoBehaviour
     private float period = 0.0f;
     private float SaveTime = 0.0f;
     public TMP_Text lastSave;
-    private string fileName = "PlayerData";
 
     public GameController()
     {
@@ -62,7 +61,7 @@ public class GameController : MonoBehaviour
 
     public void Start()
     {
-        data = DataSave.SaveExists(fileName) ? DataSave.LoadData<Data>(fileName) : new Data();
+        data = DataSave.SaveExists() ? DataSave.LoadData<Data>() : new Data();
         LoadController();
     }
     public void Update()
@@ -81,7 +80,7 @@ public class GameController : MonoBehaviour
         lastSave.SetText($"Last save: {SaveTime:F0}s ago");
         if (SaveTime >= 15)
         {
-            DataSave.SaveData(data, fileName);
+            DataSave.SaveData(data);
             SaveTime = 0;
         }
     }
@@ -123,18 +122,17 @@ public class GameController : MonoBehaviour
 
     public void CreatureReset()
     {
-        Debug.Log("enter1");
-        Debug.Log(creatureScreenCG.alpha);
-        if (creatureScreenCG.alpha == 0)
+        if (choice.cardsAvailable > 0)
         {
+            if (creatureScreenCG.alpha == 0)
+            {
                 ResetContent();
                 fadeIntoCreatureScreen = true;
                 choice.Align();
                 data.maxLevel = 0;
-        }
-        else
-        {
-            Debug.Log("enter2");
+            }
+            else
+            {
                 fadeIntoMainGame = true;
                 cardEffect.SetText(CardText());
                 creature.fillNumber = 0;
@@ -142,6 +140,17 @@ public class GameController : MonoBehaviour
                 creature.gameObject.SetActive(false);
                 creature.count++;
                 data.creature_Count++;
+            }
+        }
+        else if (choice.cardsAvailable == 0)
+        {
+            fadeIntoMainGame = true;
+            cardEffect.SetText(CardText());
+            creature.fillNumber = 0;
+            creature.button.SetActive(false);
+            creature.gameObject.SetActive(false);
+            creature.count++;
+            data.creature_Count++;
         }
     }
     private void GameLoop()
@@ -171,13 +180,25 @@ public class GameController : MonoBehaviour
         {
             rebirth.gameObject.SetActive(true);
         }
+        else if (data.maxLevel <= 40 && rebirth.gameObject.activeSelf)
+        {
+            rebirth.gameObject.SetActive(false);
+        }
         if (data.maxLevel >= 90 && prestige.gameObject.activeSelf == false)
         {
             prestige.gameObject.SetActive(true);
         }
+        else if (data.maxLevel <= 90 && prestige.gameObject.activeSelf)
+        {
+            prestige.gameObject.SetActive(false);
+        }
         if (data.maxLevel >= 100 && creature.gameObject.activeSelf == false)
         {
             creature.gameObject.SetActive(true);
+        }
+        else if (data.maxLevel <= 100 && creature.gameObject.activeSelf)
+        {
+            creature.gameObject.SetActive(false);
         }
     }
 
@@ -224,8 +245,8 @@ public class GameController : MonoBehaviour
             else
             {
                 creatureScreenCG.alpha = 0;
-                creatureScreenCG.gameObject.SetActive(false);
                 mainGameCG.gameObject.SetActive(true);
+                creatureScreenCG.gameObject.SetActive(false);
                 mainGameCG.alpha += Time.deltaTime;
             }
 
@@ -245,8 +266,8 @@ public class GameController : MonoBehaviour
             else
             {
                 mainGameCG.alpha = 0;
-                mainGameCG.gameObject.SetActive(false);
                 creatureScreenCG.gameObject.SetActive(true);
+                mainGameCG.gameObject.SetActive(false);
                 creatureScreenCG.alpha += Time.deltaTime;
             }
 

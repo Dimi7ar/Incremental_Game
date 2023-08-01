@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
 
-public class DataSave
+/*public class DataSave
 {
     private const string FileType = ".txt";
 
@@ -59,57 +59,46 @@ public class DataSave
     {
         return PlayerPrefs.HasKey(fileName + FileType);
     }
-}
-/*public static class DataSave
+}*/
+public static class DataSave
 {
     [DllImport("__Internal")]
     private static extern void JS_FileSystem_Sync();
-    private static string SavePath => Application.persistentDataPath + "/saves/";
-    private static string BackUpSavePath => Application.persistentDataPath + "/backups/";
  
     private static int SaveCount;
-    public static void SaveData<T>(T data, string fileName)
+    public static void SaveData<T>(T data)
     {
-        Directory.CreateDirectory(SavePath);
-        Directory.CreateDirectory(BackUpSavePath);
+        Directory.CreateDirectory("/idbfs/PrestigeLayersPlayerData");
        
-        if (SaveCount % 5 == 0)
-            Save(BackUpSavePath);
-        Save(SavePath);
-        SaveCount++;
+        Save();
  
-        void Save(string path)
+        void Save()
         {
-            using (StreamWriter writer = new StreamWriter(path + fileName + FileType))
+            using (StreamWriter writer = new StreamWriter("/idbfs/PrestigeLayersPlayerData/data.dat"))
             {
                 BinaryFormatter formatter = new BinaryFormatter();
                 MemoryStream memoryStream = new MemoryStream();
                 formatter.Serialize(memoryStream, data);
                 string dataToSave = Convert.ToBase64String(memoryStream.ToArray());
                 writer.WriteLine(dataToSave);
+                JS_FileSystem_Sync();
             }
         }
     }
  
-    public static T LoadData<T>(string fileName)
+    public static T LoadData<T>()
     {
-        Directory.CreateDirectory(SavePath);
-        Directory.CreateDirectory(BackUpSavePath);
+        Directory.CreateDirectory("/idbfs/PrestigeLayersPlayerData");
  
-        bool backUpInNeed = false;
         T dataToReturn;
        
-        Load(SavePath);
-        if (backUpInNeed)
-        {
-            Load(BackUpSavePath);
-        }
+        Load();
        
         return dataToReturn;
  
-        void Load(string path)
+        void Load()
         {
-            using (StreamReader reader = new StreamReader(path + fileName + FileType))
+            using (StreamReader reader = new StreamReader("/idbfs/PrestigeLayersPlayerData/data.dat"))
             {
                 BinaryFormatter formatter = new BinaryFormatter();
                 string dataToLoad = reader.ReadToEnd();
@@ -120,16 +109,14 @@ public class DataSave
                 }
                 catch
                 {
-                    backUpInNeed = true;
                     dataToReturn = default;
                 }
             }
         }
     }
  
-    public static bool SaveExists(string fileName)
+    public static bool SaveExists()
     {
-        return (File.Exists(SavePath + fileName + FileType)) ||
-               (File.Exists(BackUpSavePath + fileName + FileType));
+        return File.Exists("/idbfs/PrestigeLayersPlayerData/data.dat");
     }
-}*/
+}
