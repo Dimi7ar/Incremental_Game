@@ -173,7 +173,7 @@ public class GameController : MonoBehaviour
 
         return $"{number:F0}";
     }
-
+    
     private void CheckAvailability()
     {
         if (data.maxLevel >= 40 && rebirth.gameObject.activeSelf == false)

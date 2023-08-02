@@ -31,7 +31,7 @@ public class Cosmos : MonoBehaviour
     {
         foreach (var bonusObject in bonusObjects)
         {
-            bonusObject.description = bonuses[bonusObject.id - 1].description;
+            bonusObject.description.SetText(bonuses[bonusObject.id - 1].description);
         }
     }
 
@@ -51,3 +51,4 @@ public class Cosmos : MonoBehaviour
         
     }
 }
+
