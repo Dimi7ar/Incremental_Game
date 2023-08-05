@@ -23,7 +23,7 @@ public class Creature : MonoBehaviour
         count = GameController.data.creature_Count;
         if (fillNumber < 1)
         {
-            fillNumber = (float)((GameController.data.level - 100) / (100 * count));
+            fillNumber = (float)((GameController.data.level - 100) / (100 * count)).ToDouble();
             fill.fillAmount = fillNumber;
         }
 

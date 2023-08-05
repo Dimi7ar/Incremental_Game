@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using BreakInfinity;
 using Cosmos_Reset;
 using UnityEngine;
 using UnityEngine.UI;
@@ -25,7 +26,7 @@ public class Cosmos : MonoBehaviour
 
     public List<CosmicBonusObject> bonusObjects;
     public int cosmosCount;
-    public int cosmicPower;
+    public BigDouble cosmicPower;
 
     public void Start()
     {

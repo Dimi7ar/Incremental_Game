@@ -1118,9 +1118,9 @@ RectTransform:
   m_Father: {fileID: 972871727}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 250, y: -484.5454}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &195955302
@@ -3488,9 +3488,9 @@ RectTransform:
   m_Father: {fileID: 972871727}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 250, y: -637.2727}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &515335480
@@ -3687,7 +3687,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &564373942
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4343,9 +4343,9 @@ RectTransform:
   m_Father: {fileID: 972871727}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 250, y: -942.7273}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &743626367
@@ -4531,9 +4531,9 @@ RectTransform:
   m_Father: {fileID: 972871727}
   m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 250, y: -1553.6365}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &795199937
@@ -4787,7 +4787,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &807743974
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6235,9 +6235,9 @@ RectTransform:
   m_Father: {fileID: 972871727}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 250, y: -1248.1819}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1146011130
@@ -6289,9 +6289,9 @@ RectTransform:
   m_Father: {fileID: 972871727}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 250, y: -51.363636}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1169065932
@@ -7681,9 +7681,9 @@ RectTransform:
   m_Father: {fileID: 972871727}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 250, y: -179.09091}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1407259838
@@ -7859,9 +7859,9 @@ RectTransform:
   m_Father: {fileID: 972871727}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 250, y: -1095.4546}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1472346856
@@ -8060,41 +8060,103 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data:
-    exp: 0
-    level: 0
-    expPerTick: 1
-    levelRequirement: 0
-    maxLevel: 0
-    multiplier: 0
-    multiplier_Exp_Multiplier: 1
-    multiplier_Gain: 0
-    multiplier_Max_Level: 0
-    multiplier_Softcap: 1.5
-    multiplier_Hardcap: 0
-    rebirth: 0
-    rebirth_Multiplier_Multiplier: 1
-    rebirth_Gain: 0
-    rebirth_Max_Level: 0
-    rebirth_Softcap: 1.5
-    rebirth_Hardcap: 0
-    prestige: 0
-    prestige_Rebirth_Multiplier: 1
-    prestige_Exp_Multiplier: 1
-    prestige_Gain: 0
-    prestige_Max_Level: 0
-    prestige_Softcap: 1.5
-    prestige_Hardcap: 0
+    exp:
+      mantissa: 0
+      exponent: 0
+    level:
+      mantissa: 0
+      exponent: 0
+    expPerTick:
+      mantissa: 1
+      exponent: 0
+    levelRequirement:
+      mantissa: 2
+      exponent: 0
+    maxLevel:
+      mantissa: 0
+      exponent: 0
+    multiplier:
+      mantissa: 0
+      exponent: 0
+    multiplier_Exp_Multiplier:
+      mantissa: 1
+      exponent: 0
+    multiplier_Gain:
+      mantissa: 1
+      exponent: 0
+    multiplier_Max_Level:
+      mantissa: 0
+      exponent: 0
+    multiplier_Softcap:
+      mantissa: 1.5
+      exponent: 0
+    multiplier_Hardcap:
+      mantissa: 1
+      exponent: 1
+    rebirth:
+      mantissa: 0
+      exponent: 0
+    rebirth_Multiplier_Multiplier:
+      mantissa: 1
+      exponent: 0
+    rebirth_Gain:
+      mantissa: 1
+      exponent: 0
+    rebirth_Max_Level:
+      mantissa: 0
+      exponent: 0
+    rebirth_Softcap:
+      mantissa: 1.5
+      exponent: 0
+    rebirth_Hardcap:
+      mantissa: 1
+      exponent: 1
+    prestige:
+      mantissa: 0
+      exponent: 0
+    prestige_Rebirth_Multiplier:
+      mantissa: 1
+      exponent: 0
+    prestige_Exp_Multiplier:
+      mantissa: 1
+      exponent: 0
+    prestige_Gain:
+      mantissa: 1
+      exponent: 0
+    prestige_Max_Level:
+      mantissa: 0
+      exponent: 0
+    prestige_Softcap:
+      mantissa: 1.5
+      exponent: 0
+    prestige_Hardcap:
+      mantissa: 1
+      exponent: 1
     card_Inventory: 
     creature_Count: 0
     cards_Available: 9
-    card_Exp_Multiplier: 1
-    card_Multiplier_Multiplier: 1
-    card_Rebirth_Multiplier: 1
-    card_Prestige_Multiplier: 1
-    card_Tickspeed_Multiplier: 1
-    card_Exp_Requirement_Decrease: 1
+    card_Exp_Multiplier:
+      mantissa: 1
+      exponent: 0
+    card_Multiplier_Multiplier:
+      mantissa: 1
+      exponent: 0
+    card_Rebirth_Multiplier:
+      mantissa: 1
+      exponent: 0
+    card_Prestige_Multiplier:
+      mantissa: 1
+      exponent: 0
+    card_Tickspeed_Multiplier:
+      mantissa: 1
+      exponent: 0
+    card_Exp_Requirement_Decrease:
+      mantissa: 1
+      exponent: 0
     cosmosCount: 0
-    cosmicPower: 0
+    cosmicPower:
+      mantissa: 0
+      exponent: 0
     cosmic_Bonuses_Obtained: 
   levels: {fileID: 1487654255}
   multiplier: {fileID: 4720554533037451306}
@@ -8125,12 +8187,24 @@ MonoBehaviour:
   cardInventory: 
   choice: {fileID: 1171050469}
   cardEffect: {fileID: 839854883}
-  expMultiplier: 1
-  multiplierMultiplier: 1
-  rebirthMultiplier: 1
-  prestigeMultiplier: 1
-  tickspeedMultiplier: 1
-  expRequirementDecrease: 1
+  expMultiplier:
+    mantissa: 1
+    exponent: 0
+  multiplierMultiplier:
+    mantissa: 1
+    exponent: 0
+  rebirthMultiplier:
+    mantissa: 1
+    exponent: 0
+  prestigeMultiplier:
+    mantissa: 1
+    exponent: 0
+  tickspeedMultiplier:
+    mantissa: 1
+    exponent: 0
+  expRequirementDecrease:
+    mantissa: 1
+    exponent: 0
   mainGameCG: {fileID: 564373943}
   creatureScreenCG: {fileID: 486207174}
   lastSave: {fileID: 77519105}
@@ -8186,7 +8260,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GameController: {fileID: 1475341718}
-  levelRequierment: 2
+  levelRequierment:
+    mantissa: 2
+    exponent: 0
   fillNumber: 0
   fill: {fileID: 1933789842}
   text: {fileID: 339116056}
@@ -8226,9 +8302,9 @@ RectTransform:
   m_Father: {fileID: 972871727}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 250, y: -331.81818}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1525177022
@@ -9189,9 +9265,9 @@ RectTransform:
   m_Father: {fileID: 972871727}
   m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 250, y: -1400.9092}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1673850680
@@ -9912,9 +9988,9 @@ RectTransform:
   m_Father: {fileID: 972871727}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 250, y: -790}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1807917984
@@ -10208,7 +10284,9 @@ MonoBehaviour:
   - {fileID: 1673850680}
   - {fileID: 795199937}
   cosmosCount: 0
-  cosmicPower: 0
+  cosmicPower:
+    mantissa: 0
+    exponent: 0
 --- !u!1 &1912260287
 GameObject:
   m_ObjectHideFlags: 0
@@ -12552,16 +12630,30 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GameController: {fileID: 1475341718}
-  multiplier: 0
-  multiplierGain: 1
-  maxLevel: 0
-  expMultiplier: 1
+  multiplier:
+    mantissa: 0
+    exponent: 0
+  multiplierGain:
+    mantissa: 1
+    exponent: 0
+  maxLevel:
+    mantissa: 0
+    exponent: 0
+  expMultiplier:
+    mantissa: 1
+    exponent: 0
   button: {fileID: 461108400}
   multiplierDescription: {fileID: 209763505}
   multiplierButtonText: {fileID: 97672640}
-  softcap: 1.5
-  cap: 25
-  hardcap: 10
+  softcap:
+    mantissa: 1.5
+    exponent: 0
+  cap:
+    mantissa: 1
+    exponent: 1
+  hardcap:
+    mantissa: 1
+    exponent: 1
 --- !u!1 &5075535441714314847
 GameObject:
   m_ObjectHideFlags: 0
@@ -12618,13 +12710,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GameController: {fileID: 1475341718}
-  rebirth: 0
-  rebirthGain: 1
-  multiplierMultiplier: 1
+  rebirth:
+    mantissa: 0
+    exponent: 0
+  rebirthGain:
+    mantissa: 1
+    exponent: 0
+  multiplierMultiplier:
+    mantissa: 1
+    exponent: 0
   button: {fileID: 2559951771540551757}
   rebirthDescription: {fileID: 2559951771379511372}
   rebirthButtonText: {fileID: 2559951771500269885}
-  maxLevel: 0
+  maxLevel:
+    mantissa: 0
+    exponent: 0
 --- !u!1 &7343446870045029026
 GameObject:
   m_ObjectHideFlags: 0
@@ -12681,14 +12781,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   GameController: {fileID: 1475341718}
-  prestige: 0
-  prestigeGain: 1
-  rebirthMultiplier: 1
-  expMultiplier: 1
+  prestige:
+    mantissa: 0
+    exponent: 0
+  prestigeGain:
+    mantissa: 1
+    exponent: 0
+  rebirthMultiplier:
+    mantissa: 1
+    exponent: 0
+  expMultiplier:
+    mantissa: 1
+    exponent: 0
   button: {fileID: 2990838322776988781}
   prestigeDescription: {fileID: 2990838323121230956}
   prestigeButtonText: {fileID: 2990838323269268765}
-  maxLevel: 0
+  maxLevel:
+    mantissa: 0
+    exponent: 0
 --- !u!1 &8065519274448246402
 GameObject:
   m_ObjectHideFlags: 0

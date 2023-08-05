@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using BreakInfinity;
 using TMPro;
 using Unity.Mathematics;
 using Unity.VisualScripting;
@@ -11,17 +12,17 @@ using UnityEngine.UI;
 public class Multiplier : MonoBehaviour
 {
     public GameController GameController;
-    public double multiplier;
-    public double multiplierGain = 1;
-    public double maxLevel;
-    public double expMultiplier = 1;
+    public BigDouble multiplier;
+    public BigDouble multiplierGain = 1;
+    public BigDouble maxLevel;
+    public BigDouble expMultiplier = 1;
     public Button button;
     public TMP_Text multiplierDescription;
     public TMP_Text multiplierButtonText;
 
-    public double softcap = 1.5;
-    public double cap = 10;
-    public double hardcap = 10;
+    public BigDouble softcap = 1.5;
+    public BigDouble cap = 10;
+    public BigDouble hardcap = 10;
 
     public Multiplier()
     {
@@ -36,7 +37,7 @@ public class Multiplier : MonoBehaviour
         softcap = GameController.data.multiplier_Softcap;
         hardcap = GameController.data.multiplier_Hardcap;
         maxLevel = GameController.data.multiplier_Max_Level;
-        multiplierDescription.SetText($"Your {GameController.ConvertNumber(multiplier, 0)} multiplier points increase exp gain by x{GameController.ConvertNumber(expMultiplier, 2)}");
+        multiplierDescription.SetText($"Your {GameController.Notation(multiplier, "F2")} multiplier points increase exp gain by x{GameController.Notation(expMultiplier, "F2")}");
     }
 
     public void Update()
@@ -63,7 +64,7 @@ public class Multiplier : MonoBehaviour
                 maxLevel = GameController.data.level;
                 GameController.data.multiplier_Max_Level = maxLevel;
             }
-            multiplierButtonText.SetText($"You will receive {GameController.ConvertNumber(multiplierGain * GameController.rebirth.multiplierMultiplier * GameController.multiplierMultiplier, 0)} multiplier on reset");
+            multiplierButtonText.SetText($"You will receive {GameController.Notation(multiplierGain * GameController.rebirth.multiplierMultiplier * GameController.multiplierMultiplier, "F0")} multiplier on reset");
         }
         else
         {
@@ -82,7 +83,7 @@ public class Multiplier : MonoBehaviour
         GameController.data.multiplier_Exp_Multiplier = 1;
         
         multiplier += multiplierGain * GameController.rebirth.multiplierMultiplier * GameController.multiplierMultiplier;
-        expMultiplier = math.pow(multiplier, 0.66);
+        expMultiplier = multiplier.Pow(0.66);
         
         GameController.data.multiplier = multiplier;
         GameController.data.multiplier_Exp_Multiplier = expMultiplier;
@@ -90,7 +91,7 @@ public class Multiplier : MonoBehaviour
         multiplierGain = 1;
         GameController.data.multiplier_Gain = multiplierGain;
         
-        multiplierDescription.SetText($"Your {GameController.ConvertNumber(multiplier, 0)} multiplier points increase exp gain by x{GameController.ConvertNumber(expMultiplier, 2)}");
+        multiplierDescription.SetText($"Your {GameController.Notation(multiplier, "F2")} multiplier points increase exp gain by x{GameController.Notation(expMultiplier, "F2")}");
     }
 
     public void ResetMultiplier()

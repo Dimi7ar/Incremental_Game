@@ -69,6 +69,7 @@
      <Compile Include="Assets\Scripts\Levels.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\WarpTextExample.cs" />
      <Compile Include="Assets\Scripts\Creature Resets\Card.cs" />
+     <Compile Include="Assets\Scripts\BigDouble.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_DigitValidator.cs" />
      <Compile Include="Assets\Scripts\Creature Resets\ChooseCard.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />

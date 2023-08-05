@@ -2,7 +2,10 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using BreakInfinity;
 using TMPro;
+using Unity.Burst;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using Random = Unity.Mathematics.Random;
@@ -36,13 +39,13 @@ public class GameController : MonoBehaviour
     public ChooseCard choice;
     public TMP_Text cardEffect;
 
-    private const double expPerTick = 1;
-    public double expMultiplier = 1;
-    public double multiplierMultiplier = 1;
-    public double rebirthMultiplier = 1;
-    public double prestigeMultiplier = 1;
-    public double tickspeedMultiplier = 1;
-    public double expRequirementDecrease = 1;
+    private BigDouble expPerTick = 1;
+    public BigDouble expMultiplier = 1;
+    public BigDouble multiplierMultiplier = 1;
+    public BigDouble rebirthMultiplier = 1;
+    public BigDouble prestigeMultiplier = 1;
+    public BigDouble tickspeedMultiplier = 1;
+    public BigDouble expRequirementDecrease = 1;
 
     public CanvasGroup mainGameCG;
     public CanvasGroup creatureScreenCG;
@@ -80,22 +83,22 @@ public class GameController : MonoBehaviour
         lastSave.SetText($"Last save: {SaveTime:F0}s ago");
         if (SaveTime >= 15)
         {
-            DataSave.SaveData(data);
             SaveTime = 0;
+            DataSave.SaveData(data);
         }
     }
 
     private void LevelUpAction()
     {
-        levels.text.SetText($"{ConvertNumber(data.exp, 0)}/{ConvertNumber(levels.levelRequierment, 0)}");
-        levels.fillNumber = (float)(data.exp / levels.levelRequierment);
+        levels.text.SetText($"{Notation(data.exp, "F0")}/{Notation(levels.levelRequierment, "F0")}");
+        levels.fillNumber = (float)(data.exp / levels.levelRequierment).ToDouble();
         levels.fill.fillAmount = levels.fillNumber;
         if (data.exp >= levels.levelRequierment)
         {
             levels.LevelUp();
         }
         data.levelRequirement = levels.levelRequierment;
-        levels.levelText.SetText($"Level: <color=green>{ConvertNumber(data.level, 0)}</color>");
+        levels.levelText.SetText($"Level: <color=green>{Notation(data.level, "F0")}</color>");
     }
     private void ExpPerSecond()
     {
@@ -159,21 +162,6 @@ public class GameController : MonoBehaviour
         CheckAvailability();
     }
 
-    public string ConvertNumber(double number, int _float)
-    {
-        if (number >= 1000)
-        {
-            return string.Format("{0:#.##e0}", number);
-        }
-
-        if (_float == 2)
-        {
-            return $"{number:F2}";
-        }
-
-        return $"{number:F0}";
-    }
-    
     private void CheckAvailability()
     {
         if (data.maxLevel >= 40 && rebirth.gameObject.activeSelf == false)
@@ -211,7 +199,7 @@ public class GameController : MonoBehaviour
         data.multiplier = 0;
         data.multiplier_Exp_Multiplier = 1;
         data.multiplier_Gain = 1;
-        multiplier.multiplierDescription.SetText($"Your {ConvertNumber(multiplier.multiplier, 0)} multiplier points increase exp gain by x{ConvertNumber(multiplier.expMultiplier, 2)}");
+        multiplier.multiplierDescription.SetText($"Your {Notation(multiplier.multiplier, "F2")} multiplier points increase exp gain by x{Notation(multiplier.expMultiplier, "F2")}");
         
         rebirth.ResetRebirth();
         rebirth.rebirth = 0;
@@ -220,18 +208,18 @@ public class GameController : MonoBehaviour
         data.rebirth = 0;
         data.rebirth_Multiplier_Multiplier = 1;
         data.rebirth_Gain = 1;
-        rebirth.rebirthDescription.SetText($"Your {ConvertNumber(rebirth.rebirth, 0)} rebirth points increase multiplier gain by x{ConvertNumber(rebirth.multiplierMultiplier, 2)}");
+        rebirth.rebirthDescription.SetText($"Your {Notation(rebirth.rebirth, "F2")} rebirth points increase multiplier gain by x{Notation(rebirth.multiplierMultiplier, "F2")}");
         
         prestige.ResetPrestige();
         prestige.prestige = 0;
-        prestige.expMultiplier = 1;
+        prestige.expMultiplier = 1; 
         prestige.rebirthMultiplier = 1;
         prestige.prestigeGain = 1;
         data.prestige = 0;
         data.prestige_Exp_Multiplier = 1;
         data.prestige_Rebirth_Multiplier = 1;
         data.prestige_Gain = 1;
-        prestige.prestigeDescription.SetText($"Your {ConvertNumber(prestige.prestige, 0)} prestige points increase rebirth gain by x{ConvertNumber(prestige.rebirthMultiplier, 2)} and exp gain by x{ConvertNumber(prestige.expMultiplier, 2)}");
+        prestige.prestigeDescription.SetText($"Your {Notation(prestige.prestige, "F2")} prestige points increase rebirth gain by x{Notation(prestige.rebirthMultiplier, "F2")} and exp gain by x{Notation(prestige.expMultiplier, "F2")}");
     }
 
     private void Fadings()
@@ -330,6 +318,19 @@ public class GameController : MonoBehaviour
     public void TestButtonClick()
     {
         data.level += 100;
+    }
+
+    public string Notation(BigDouble x, string y)
+    {
+        if (x > 1000)
+        {
+            BigDouble cap = 10;
+            BigDouble exponent = x.AbsLog10();
+            exponent = exponent.Floor();
+            BigDouble mantissa = x / cap.Pow(exponent);
+            return mantissa.ToString(format: "F2") + "e" + exponent;
+        }
+        return x.ToString(y);
     }
    
 }

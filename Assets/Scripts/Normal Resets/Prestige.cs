@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using BreakInfinity;
 using TMPro;
 using Unity.Mathematics;
 using UnityEngine;
@@ -10,18 +11,18 @@ using UnityEngine.UI;
 public class Prestige : MonoBehaviour
 {
     public GameController GameController;
-    public double prestige;
-    public double prestigeGain = 1;
-    public double rebirthMultiplier = 1;
-    public double expMultiplier = 1;
+    public BigDouble prestige;
+    public BigDouble prestigeGain = 1;
+    public BigDouble rebirthMultiplier = 1;
+    public BigDouble expMultiplier = 1;
     public Button button;
     public TMP_Text prestigeDescription;
     public TMP_Text prestigeButtonText;
-    public double maxLevel;
+    public BigDouble maxLevel;
     
-    private double softcap = 1.5;
-    private double cap = 10;
-    private double hardcap = 10;
+    private BigDouble softcap = 1.5;
+    private BigDouble cap = 10;
+    private BigDouble hardcap = 10;
 
     public Prestige()
     {
@@ -37,7 +38,7 @@ public class Prestige : MonoBehaviour
         softcap = GameController.data.prestige_Softcap;
         hardcap = GameController.data.prestige_Hardcap;
         maxLevel = GameController.data.prestige_Max_Level;
-        prestigeDescription.SetText($"Your {GameController.ConvertNumber(prestige, 0)} prestige points increase rebirth gain by x{GameController.ConvertNumber(rebirthMultiplier, 2)} and exp gain by x{GameController.ConvertNumber(expMultiplier, 2)}");
+        prestigeDescription.SetText($"Your {GameController.Notation(prestige, "F2")} prestige points increase rebirth gain by x{GameController.Notation(rebirthMultiplier, "F2")} and exp gain by x{GameController.Notation(expMultiplier, "F2")}");
     }
 
     public void Update()
@@ -63,7 +64,7 @@ public class Prestige : MonoBehaviour
                     maxLevel = GameController.data.level;
                 }
                 prestigeButtonText.SetText(
-                    $"You will receive {GameController.ConvertNumber(prestigeGain * GameController.prestigeMultiplier, 0)} prestige on reset");
+                    $"You will receive {GameController.Notation(prestigeGain * GameController.prestigeMultiplier, "F0")} prestige on reset");
                 GameController.data.prestige_Gain = prestigeGain;
             }
             else
@@ -82,8 +83,8 @@ public class Prestige : MonoBehaviour
 
         prestige += prestigeGain * GameController.prestigeMultiplier;
         
-        expMultiplier = math.pow(prestige, 0.66);
-        rebirthMultiplier = math.pow(prestige, 0.44);
+        expMultiplier = prestige.Pow(0.66);
+        rebirthMultiplier = prestige.Pow(0.44);
 
         GameController.data.prestige_Exp_Multiplier = expMultiplier;
         GameController.data.prestige_Rebirth_Multiplier = rebirthMultiplier;
@@ -91,9 +92,9 @@ public class Prestige : MonoBehaviour
         prestigeGain = 1;
         GameController.data.prestige_Gain = 1;
         
-        GameController.multiplier.multiplierDescription.SetText($"Your {GameController.ConvertNumber(GameController.multiplier.multiplier, 0)} multiplier points increase exp gain by x{GameController.ConvertNumber(GameController.multiplier.expMultiplier, 2)}");
-        GameController.rebirth.rebirthDescription.SetText($"Your {GameController.ConvertNumber(GameController.rebirth.rebirth, 0)} rebirth points increase multiplier gain by x{GameController.ConvertNumber(GameController.rebirth.multiplierMultiplier, 2)}");
-        prestigeDescription.SetText($"Your {GameController.ConvertNumber(prestige, 0)} prestige points increase rebirth gain by x{GameController.ConvertNumber(rebirthMultiplier, 2)} and exp gain by x{GameController.ConvertNumber(expMultiplier, 2)}");
+        GameController.multiplier.multiplierDescription.SetText($"Your {GameController.Notation(GameController.multiplier.multiplier, "F2")} multiplier points increase exp gain by x{GameController.Notation(GameController.multiplier.expMultiplier, "F2")}");
+        GameController.rebirth.rebirthDescription.SetText($"Your {GameController.Notation(GameController.rebirth.rebirth, "F2")} rebirth points increase multiplier gain by x{GameController.Notation(GameController.rebirth.multiplierMultiplier, "F2")}");
+        prestigeDescription.SetText($"Your {GameController.Notation(prestige, "F2")} prestige points increase rebirth gain by x{GameController.Notation(rebirthMultiplier, "F2")} and exp gain by x{GameController.Notation(expMultiplier, "F2")}");
     }
 
     public void ResetPrestige()
