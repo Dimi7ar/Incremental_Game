@@ -51,6 +51,7 @@ public class Data
     public int cosmosCount;
     public BigDouble cosmicPower;
     public List<int> cosmic_Bonuses_Obtained = new List<int>();
+    public int cosmos_Multiplier = 1;
     public Data()
     {
         creature_Count = 1;

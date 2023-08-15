@@ -64,7 +64,7 @@ public class Multiplier : MonoBehaviour
                 maxLevel = GameController.data.level;
                 GameController.data.multiplier_Max_Level = maxLevel;
             }
-            multiplierButtonText.SetText($"You will receive {GameController.Notation(multiplierGain * GameController.rebirth.multiplierMultiplier * GameController.multiplierMultiplier, "F0")} multiplier on reset");
+            multiplierButtonText.SetText($"You will receive {GameController.Notation(multiplierGain * GameController.rebirth.multiplierMultiplier * GameController.multiplierMultiplier * GameController.data.cosmos_Multiplier, "F0")} multiplier on reset");
         }
         else
         {
@@ -82,7 +82,7 @@ public class Multiplier : MonoBehaviour
         expMultiplier = 1;
         GameController.data.multiplier_Exp_Multiplier = 1;
         
-        multiplier += multiplierGain * GameController.rebirth.multiplierMultiplier * GameController.multiplierMultiplier;
+        multiplier += multiplierGain * GameController.rebirth.multiplierMultiplier * GameController.multiplierMultiplier * GameController.data.cosmos_Multiplier;
         expMultiplier = multiplier.Pow(0.66);
         
         GameController.data.multiplier = multiplier;

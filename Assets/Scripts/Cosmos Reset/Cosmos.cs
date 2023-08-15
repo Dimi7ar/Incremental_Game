@@ -12,6 +12,9 @@ public class Cosmos : MonoBehaviour
     public GameController GameController;
     public List<CosmicBonus> bonuses = new List<CosmicBonus>()
     {
+        //razmeni 7 i 10
+        //proverqvash v update za 1%rite
+        //proverqvash za drugite kato se breachva kosmosa samo
         new CosmicBonus(1,1, "Gain 1% of Multiplier per tick, that you would get on reset.", false),
         new CosmicBonus(2,2, "Cosmic Power gain is increase x2 for each Cosmos after 1.", false),
         new CosmicBonus(3,3, "Add 3 new cards for the void to offer.", false),
@@ -27,6 +30,7 @@ public class Cosmos : MonoBehaviour
     public List<CosmicBonusObject> bonusObjects;
     public int cosmosCount;
     public BigDouble cosmicPower;
+    public int cosmosMultiplier = 1;
 
     public void Start()
     {
@@ -38,6 +42,7 @@ public class Cosmos : MonoBehaviour
 
     public void Update()
     {
+        cosmosCount = GameController.data.cosmosCount;
         foreach (var bonus in bonuses.Where(x => x.obtained == false))
         {
             if ((bonus.requirement <= cosmosCount))
@@ -48,6 +53,14 @@ public class Cosmos : MonoBehaviour
                 if (!GameController.data.cosmic_Bonuses_Obtained.Contains(bonus.id))
                      GameController.data.cosmic_Bonuses_Obtained.Add(bonus.id);
             }
+        }
+        if (cosmosCount == 1)
+        {
+            cosmicPower += 1;
+        }
+        else
+        {
+            cosmicPower += Math.Pow(2, cosmosCount);
         }
         
     }

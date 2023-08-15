@@ -60,7 +60,7 @@ public class Rebirth : MonoBehaviour
                     maxLevel = GameController.data.level;
                 }
                 rebirthButtonText.SetText(
-                    $"You will receive {GameController.Notation(rebirthGain * GameController.prestige.rebirthMultiplier * GameController.rebirthMultiplier, "F0")} rebirth on reset");
+                    $"You will receive {GameController.Notation(rebirthGain * GameController.prestige.rebirthMultiplier * GameController.rebirthMultiplier * GameController.data.cosmos_Multiplier, "F0")} rebirth on reset");
                 GameController.data.rebirth_Gain = rebirthGain;
             }
             else
@@ -75,7 +75,7 @@ public class Rebirth : MonoBehaviour
         Reset();
         
         multiplierMultiplier = 1;
-        rebirth += rebirthGain * GameController.prestige.rebirthMultiplier * GameController.rebirthMultiplier;
+        rebirth += rebirthGain * GameController.prestige.rebirthMultiplier * GameController.rebirthMultiplier * GameController.data.cosmos_Multiplier;
         
         multiplierMultiplier = rebirth.Pow(0.66);
         GameController.data.rebirth_Multiplier_Multiplier = multiplierMultiplier;

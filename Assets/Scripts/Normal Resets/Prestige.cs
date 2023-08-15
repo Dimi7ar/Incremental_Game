@@ -64,7 +64,7 @@ public class Prestige : MonoBehaviour
                     maxLevel = GameController.data.level;
                 }
                 prestigeButtonText.SetText(
-                    $"You will receive {GameController.Notation(prestigeGain * GameController.prestigeMultiplier, "F0")} prestige on reset");
+                    $"You will receive {GameController.Notation(prestigeGain * GameController.prestigeMultiplier * GameController.data.cosmos_Multiplier, "F0")} prestige on reset");
                 GameController.data.prestige_Gain = prestigeGain;
             }
             else
@@ -81,7 +81,7 @@ public class Prestige : MonoBehaviour
         rebirthMultiplier = 1;
         expMultiplier = 1;
 
-        prestige += prestigeGain * GameController.prestigeMultiplier;
+        prestige += prestigeGain * GameController.prestigeMultiplier * GameController.data.cosmos_Multiplier;
         
         expMultiplier = prestige.Pow(0.66);
         rebirthMultiplier = prestige.Pow(0.44);

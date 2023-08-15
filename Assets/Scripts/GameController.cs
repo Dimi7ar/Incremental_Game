@@ -18,6 +18,7 @@ public class GameController : MonoBehaviour
     public Rebirth rebirth;
     public Prestige prestige;
     public Creature creature;
+    public Cosmos cosmos;
 
     public GameObject mainGame;
     public GameObject creatureScreen;
@@ -102,7 +103,7 @@ public class GameController : MonoBehaviour
     }
     private void ExpPerSecond()
     {
-        data.expPerTick = expPerTick * multiplier.expMultiplier * prestige.expMultiplier * expMultiplier;
+        data.expPerTick = expPerTick * multiplier.expMultiplier * prestige.expMultiplier * expMultiplier * data.cosmos_Multiplier;
         data.exp += data.expPerTick;
     }
     public void BuyMultiplier()
@@ -188,6 +189,7 @@ public class GameController : MonoBehaviour
         {
             creature.gameObject.SetActive(false);
         }
+        //on start of game check cosmos
     }
 
     private void ResetContent()
@@ -331,6 +333,63 @@ public class GameController : MonoBehaviour
             return mantissa.ToString(format: "F2") + "e" + exponent;
         }
         return x.ToString(y);
+    }
+
+    private void BreachCosmos()
+    {
+        bool flag = false;
+        if(data.cosmosCount == 0)
+        {
+            if (data.level >= 500)
+            {
+                ResetContent();
+                data.cosmosCount++;
+                data.cosmic_Bonuses_Obtained.Add(data.cosmosCount);
+                cosmos.cosmosCount++;
+                flag = true;
+            }
+        }
+        else
+        {
+            if (data.level >= 500 * (data.cosmosCount + 1))
+            {
+                ResetContent();
+                data.cosmosCount++;
+                data.cosmic_Bonuses_Obtained.Add(data.cosmosCount);
+                cosmos.cosmosCount++;
+                flag = true;
+            }
+        }
+
+        if (flag)
+        {
+            switch (data.cosmosCount)
+            {
+                case 1:
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    break;
+                case 5:
+                    break;
+                case 6:
+                    break;
+                case 7:
+                    break;
+                case 8:
+                    break;
+                case 9:
+                    break;
+                case 10:
+                    break;
+                default:
+                    break;
+            }
+            flag = false;
+        }
     }
    
 }
